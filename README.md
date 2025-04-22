@@ -92,20 +92,8 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## 🌐 Connect With Us
 For queries, suggestions, or collaboration opportunities:  
-📧 **Email**: [YourEmail@example.com]  
+📧 **Email**: [aymanaltairi8@gmail.com.com]  
+📧 **Email**: [aymanaltairi75@gmail.com.com]  
+📧 **Email**: [aymanaltairi7368@gmail.com.com]  
 🐙 **GitHub**: [AymanAltairi73](https://github.com/AymanAltairi73)
 
----
-
-## 🎉 Acknowledgments
-Special thanks to all contributors and coffee lovers for making this project a reality! ☕
-```
-
-### Improvements made:
-1. **Enhanced presentation** with emojis and badges for a polished look.
-2. **Clearer structure** with headings and sections for easier navigation.
-3. **Call-to-action** for contributions and connecting with you.
-4. **Placeholder for screenshots** to visually showcase the app.
-5. Improved **language and tone** for a more engaging reading experience.
-
-Let me know if you'd like to tweak anything further! 😊
