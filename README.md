@@ -1,6 +1,4 @@
-Here’s an enhanced and engaging version of your `README.md` file in English with icons and formatting to make it more enjoyable for readers:
 
-```markdown
 # ☕ CupCraft - Modern Coffee Shop App
 
 ![Flutter](https://img.shields.io/badge/Flutter-Framework-blue?style=for-the-badge&logo=flutter)
