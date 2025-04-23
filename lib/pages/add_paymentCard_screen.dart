@@ -267,7 +267,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
               _paymentCard.saveCard = value ?? false;
             });
           },
-          fillColor: MaterialStateProperty.resolveWith(
+          fillColor: WidgetStateProperty.resolveWith(
             (states) => const Color(0xFFCE9760),
           ),
         ),
