@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import '../model/Coffee.dart';
-import '../utility/navigation_helper.dart';
-import '../widgets/custom_bottom_nav_bar.dart';
+
 import 'coffee_details_screen.dart';
+import '../widgets/custom_bottom_nav_bar.dart';
+import '../../core/utility/navigation_helper.dart';
+import '../../data/model/Coffee.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

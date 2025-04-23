@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../model/CartItem.dart';
-import '../model/Coffee.dart';
-import '../provider/cart_provider.dart';
+import '../../data/model/CartItem.dart';
+import '../../data/model/Coffee.dart';
+import '../../core/provider/cart_provider.dart';
 
 class CoffeeDetailsScreen extends StatefulWidget {
   final Coffee coffee;

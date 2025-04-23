@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../model/Coffee.dart';
+import '../../data/model/Coffee.dart';
 
 class NavigationHelper {
   static void navigateToPage(BuildContext context, int index, {

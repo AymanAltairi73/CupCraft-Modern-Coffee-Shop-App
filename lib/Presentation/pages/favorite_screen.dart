@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../model/Coffee.dart';
-import '../utility/navigation_helper.dart';
+import '../../data/model/Coffee.dart';
+import '../../core/utility/navigation_helper.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
 
 class FavoriteScreen extends StatefulWidget {

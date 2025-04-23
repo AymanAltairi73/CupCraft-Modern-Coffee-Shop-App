@@ -1,5 +1,6 @@
-import 'package:coffee_shop_app/pages/home_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'home_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -33,8 +34,8 @@ class RegisterScreen extends StatelessWidget {
                 // Coffee Logo
                 Image.asset(
                   'assets/images/logo.png',
-                  width: 50,
-                  height: 50,
+                  width: 60,
+                  height: 60,
                   color: Color(0xFFCE9760),
                 ),
                 const SizedBox(height: 20),
@@ -51,7 +52,7 @@ class RegisterScreen extends StatelessWidget {
                 const SizedBox(height: 40),
                 // Full Name TextField
                 TextField(
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white30),
                   decoration: InputDecoration(
                     hintText: 'Full Name',
                     hintStyle: TextStyle(color: Colors.grey[600]),
@@ -67,7 +68,7 @@ class RegisterScreen extends StatelessWidget {
                 const SizedBox(height: 16),
                 // Email TextField
                 TextField(
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white30),
                   decoration: InputDecoration(
                     hintText: 'E-mail Address',
                     hintStyle: TextStyle(color: Colors.grey[600]),
@@ -101,7 +102,7 @@ class RegisterScreen extends StatelessWidget {
                 // Confirm Password TextField
                 TextField(
                   obscureText: true,
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white30),
                   decoration: InputDecoration(
                     hintText: 'Confirm Password',
                     hintStyle: TextStyle(color: Colors.grey[600]),

@@ -33,8 +33,8 @@ class LoginScreen extends StatelessWidget {
                   // Coffee Icon
                   Image.asset(
                     'assets/images/logo.png',
-                    width: 50,
-                    height: 50,
+                    width: 60,
+                    height: 60,
                     color: const Color(0xFFCE9760),
                   ),
                   const SizedBox(height: 20),
@@ -51,7 +51,7 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 40),
                   // Email TextField
                   TextField(
-                    style: const TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white30),
                     decoration: InputDecoration(
                       hintText: 'E-mail Address',
                       hintStyle: TextStyle(color: Colors.grey[600]),
@@ -140,7 +140,7 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 30),
                   // Social Login Buttons
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       _socialLoginButton('assets/images/facebook.png'),
                       const SizedBox(width: 20),
@@ -149,13 +149,13 @@ class LoginScreen extends StatelessWidget {
                       _socialLoginButton('assets/images/twitter.png'),
                     ],
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 70),
                   // Register Link
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Don\'t have an account? ',
+                        'Don\'t have an account?',
                         style: TextStyle(color: Colors.white),
                       ),
                       TextButton(
@@ -183,8 +183,8 @@ class LoginScreen extends StatelessWidget {
 
   Widget _socialLoginButton(String iconPath) {
     return Container(
-      width: 60,
-      height: 60,
+      width: 70,
+      height: 70,
       decoration: BoxDecoration(
         color: const Color(0xFF1E1E1E),
         borderRadius: BorderRadius.circular(12),

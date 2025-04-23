@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../model/Coffee.dart';
-import '../provider/cart_provider.dart';
-import '../utility/navigation_helper.dart';
+import '../../data/model/Coffee.dart';
+import '../../core/provider/cart_provider.dart';
+import '../../core/utility/navigation_helper.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
 import 'checkout_screen.dart';
 

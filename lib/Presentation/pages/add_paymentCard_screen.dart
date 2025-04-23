@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../model/PaymentCard.dart';
+import '../../data/model/PaymentCard.dart';
 
 class AddCardScreen extends StatefulWidget {
   const AddCardScreen({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../model/Coffee.dart';
-import '../provider/cart_provider.dart';
+import '../../data/model/Coffee.dart';
+import '../../core/provider/cart_provider.dart';
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({

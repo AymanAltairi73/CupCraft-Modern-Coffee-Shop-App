@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../utility/navigation_helper.dart';
-import '../widgets/custom_bottom_nav_bar.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
-  final int _selectedIndex = 0;
+  //final int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {

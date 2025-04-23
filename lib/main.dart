@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
-import 'model/Coffee.dart';
-import 'pages/LoginScreen.dart';
-import 'pages/RegisterScreen.dart';
-import 'pages/add_paymentCard_screen.dart';
-import 'pages/cart_screen.dart';
-import 'pages/checkout_screen.dart';
-import 'pages/favorite_screen.dart';
-import 'pages/home_screen.dart';
-import 'pages/my_orders_screen.dart';
-import 'pages/notification_screen.dart';
-import 'pages/onboarding_screen.dart';
-import 'pages/payment_done_screen.dart';
-import 'pages/privacy_policy_screen.dart';
-import 'pages/profile_screen.dart';
-import 'pages/settings_screen.dart';
-import 'pages/splash_screen.dart';
-import 'pages/track_order_screen.dart';
-import 'provider/cart_provider.dart';
+import 'data/model/Coffee.dart';
+import 'Presentation/pages/RegisterScreen.dart';
+import 'Presentation/pages/add_paymentCard_screen.dart';
+import 'Presentation/pages/cart_screen.dart';
+import 'Presentation/pages/checkout_screen.dart';
+import 'Presentation/pages/favorite_screen.dart';
+import 'Presentation/pages/my_orders_screen.dart';
+import 'Presentation/pages/notification_screen.dart';
+import 'Presentation/pages/onboarding_screen.dart';
+import 'Presentation/pages/payment_done_screen.dart';
+import 'Presentation/pages/privacy_policy_screen.dart';
+import 'Presentation/pages/profile_screen.dart';
+import 'Presentation/pages/settings_screen.dart';
+import 'Presentation/pages/splash_screen.dart';
+import 'Presentation/pages/track_order_screen.dart';
+import 'core/provider/cart_provider.dart';
 import 'package:provider/provider.dart';
+
+import 'Presentation/pages/LoginScreen.dart';
+import 'Presentation/pages/home_screen.dart';
 
 void main() {
   runApp(

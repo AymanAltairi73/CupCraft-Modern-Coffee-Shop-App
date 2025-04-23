@@ -35,7 +35,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // PageView للصور والنصوص
+          // PageView for images and text
           PageView.builder(
             controller: _controller,
             onPageChanged: (index) {
@@ -45,7 +45,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             itemBuilder: (context, index) {
               return Stack(
                 children: [
-                  // خلفية الصورة
+                  // Background Image
                   Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
@@ -54,18 +54,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                     ),
                   ),
-                  // طبقة شفافة سوداء
+                  // Black Overlay
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.5),
                     ),
                   ),
-                  // العنوان والوصف
+                  // Title and Description
                   Center(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 300,
+                      ),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
                             pages[index]['title']!,
@@ -80,7 +83,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           Text(
                             pages[index]['description']!,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color(0xFFCE9760),
                               fontSize: 18,
                               fontFamily: 'Poppins',
@@ -95,53 +98,63 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             },
           ),
 
-          // زر Skip في الأعلى
+          // Top Bar with Skip button and Page Indicator
           Positioned(
             top: 50,
-            right: 20,
-            child: TextButton(
-              onPressed: () => _controller.jumpToPage(pages.length - 1),
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.white.withOpacity(0.2),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+            left: 24,
+            right: 24,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Page Indicator
+                SmoothPageIndicator(
+                  controller: _controller,
+                  count: pages.length,
+                  effect: const ExpandingDotsEffect(
+                    dotColor: Colors.white30,
+                    activeDotColor: Color(0xFFCE9760),
+                    dotHeight: 8,
+                    dotWidth: 8,
+                    spacing: 8,
+                    expansionFactor: 3,
+                  ),
                 ),
-              ),
-              child: const Text(
-                'Skip',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+
+                // Skip Button - Only shown when not on last page
+                if (!onLastPage)
+                  TextButton(
+                    onPressed: () => _controller.jumpToPage(pages.length - 1),
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.white.withOpacity(0.2),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 8,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    child: const Text(
+                      'Skip',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+              ],
             ),
           ),
 
-          // الأزرار في الأسفل
-          Positioned(
-            bottom: 30,
-            left: 24,
-            right: 24,
-            child: Column(
-              children: [
-                // Page Indicator
-                Center(
-                  child: SmoothPageIndicator(
-                    controller: _controller,
-                    count: pages.length,
-                    effect: const WormEffect(
-                      dotColor: Colors.white30,
-                      activeDotColor: Color(0xFFCE9760),
-                      dotHeight: 10,
-                      dotWidth: 10,
-                    ),
-                  ),
-                ),
-                // أزرار Register و Sign In في الصفحة الأخيرة فقط
-                if (onLastPage) ...[
-                  const SizedBox(height: 30),
+          // Bottom Buttons
+          if (onLastPage)
+            Positioned(
+              bottom: 50,
+              left: 24,
+              right: 24,
+              child: Column(
+                children: [
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -165,7 +178,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 8),
                   SizedBox(
                     width: double.infinity,
                     child: TextButton(
@@ -193,9 +206,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
                 ],
-              ],
+              ),
             ),
-          ),
         ],
       ),
     );
