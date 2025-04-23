@@ -1,20 +1,20 @@
 class Coffee {
   final String name;
-  final String image;
   final double price;
+  final String image;
   final String description;
+  bool isSelected;
+  int quantity;
   bool isFavorite;
-  bool isSelected;  // للسلة
-  int quantity;     // للكمية في السلة
 
   Coffee({
     required this.name,
-    required this.image,
     required this.price,
+    required this.image,
     required this.description,
-    this.isFavorite = false,
     this.isSelected = false,
     this.quantity = 1,
+    this.isFavorite = false,
   });
 }
 // List<Coffee> coffeeList = [

@@ -146,7 +146,7 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
         ),
         const SizedBox(height: 20),
         Image.asset(
-          'assets/images/arrow.png',
+          'assets/images/arrow2.png',
           // width: 10,
           // height: 19,
           //color: const Color(0xFFCE9760),

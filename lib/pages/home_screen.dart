@@ -13,32 +13,32 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final int _selectedIndex = 0;
-List<Coffee> coffeeList = [
-  Coffee(
-    name: 'Arabica',
-    price: 18,
-    image: 'assets/images/arabica.png',
-    description: 'Lorem ipsum dolor sit amet cons',
-  ),
-  Coffee(
-    name: 'Robusta',
-    price: 20,
-    image: 'assets/images/robusta.png',
-    description: 'Lorem ipsum dolor sit amet cons',
-  ),
-  Coffee(
-    name: 'Excelsa',
-    price: 15,
-    image: 'assets/images/excelsa.png',
-    description: 'Lorem ipsum dolor sit amet cons',
-  ),
-  Coffee(
-    name: 'Liberica',
-    price: 12,
-    image: 'assets/images/liberica.png',
-    description: 'Lorem ipsum dolor sit amet cons',
-  ),
-];
+  List<Coffee> coffeeList = [
+    Coffee(
+      name: 'Arabica',
+      price: 18,
+      image: 'assets/images/arabica.png',
+      description: 'Lorem ipsum dolor sit amet cons',
+    ),
+    Coffee(
+      name: 'Robusta',
+      price: 20,
+      image: 'assets/images/robusta.png',
+      description: 'Lorem ipsum dolor sit amet cons',
+    ),
+    Coffee(
+      name: 'Excelsa',
+      price: 15,
+      image: 'assets/images/excelsa.png',
+      description: 'Lorem ipsum dolor sit amet cons',
+    ),
+    Coffee(
+      name: 'Liberica',
+      price: 12,
+      image: 'assets/images/liberica.png',
+      description: 'Lorem ipsum dolor sit amet cons',
+    ),
+  ];
   final List<String> _categories = [
     'Hot Coffees',
     'Ice Teas',
@@ -46,58 +46,22 @@ List<Coffee> coffeeList = [
     'Drinks',
     'Bakery',
   ];
-  
-  // void _handleNavigation(int index) {
-  //   if (index == _selectedIndex) return;
-    
-  //   Widget page;
-  //   switch (index) {
-  //     case 0:
-  //       page = const HomeScreen();
-  //       break;
-  //     case 1:
-  //       page = CartScreen(
-  //         coffeeList: coffeeList,
-  //         onCartChanged: updateCartStatus,
-  //       );
-  //       break;
-  //     case 2:
-  //       page = FavoriteScreen(
-  //         coffeeList: coffeeList,
-  //         onFavoriteChanged: updateFavoriteStatus,
-  //       );
-  //       break;
-  //     case 3:
-  //       page = const ProfileScreen();
-  //       break;
-  //     default:
-  //       page = const HomeScreen();
-  //   }
-
-  //   Navigator.pushReplacement(
-  //     context,
-  //     PageRouteBuilder(
-  //       pageBuilder: (context, animation, secondaryAnimation) => page,
-  //       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-  //         return FadeTransition(opacity: animation, child: child);
-  //       },
-  //     ),
-  //   );
-  // }
 
   int _selectedCategory = 0;
 
-   void updateFavoriteStatus(Coffee coffee) {
+  void updateFavoriteStatus(Coffee coffee) {
     setState(() {
       coffee.isFavorite = !coffee.isFavorite;
     });
   }
+
   void updateCartStatus(Coffee coffee, {bool? isSelected, int? quantity}) {
     setState(() {
       if (isSelected != null) coffee.isSelected = isSelected;
       if (quantity != null) coffee.quantity = quantity;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,17 +74,10 @@ List<Coffee> coffeeList = [
             _buildCategories(),
 
             Expanded(child: _buildCoffeeGrid()),
-            // CustomBottomNavBar(
-            //   selectedIndex: _selectedIndex,
-            //   onItemSelected: (index) {
-            //     setState(() => _selectedIndex = index);
-            //   },
-              
-            // ),
           ],
         ),
       ),
-        bottomNavigationBar: CustomBottomNavBar(
+      bottomNavigationBar: CustomBottomNavBar(
         selectedIndex: _selectedIndex,
         onItemSelected: (index) {
           NavigationHelper.navigateToPage(
@@ -155,7 +112,7 @@ List<Coffee> coffeeList = [
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
                 Text(
-                  'Shahzaib',
+                  'Ayman Altairi',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -175,7 +132,7 @@ List<Coffee> coffeeList = [
           ),
           IconButton(
             icon: const Icon(Icons.notifications_none, color: Colors.white),
-            onPressed: () {},
+            onPressed: () => Navigator.pushNamed(context, '/notifications'),
           ),
         ],
       ),
@@ -294,8 +251,9 @@ List<Coffee> coffeeList = [
                                   updatedCoffee.isFavorite;
                             }
                           });
-                        }, onCartChanged: updateCartStatus,            
-                                  ),
+                        },
+                        onCartChanged: updateCartStatus,
+                      ),
                 ),
               );
             },

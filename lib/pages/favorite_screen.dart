@@ -83,9 +83,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const Icon(
-            Icons.notifications_none,
-            color: Colors.white,
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/notification');
+            },
+            child: const Icon(
+              Icons.notifications_none,
+              color: Colors.white,
+            ),
           ),
         ],
       ),

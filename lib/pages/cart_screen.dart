@@ -4,6 +4,7 @@ import '../model/Coffee.dart';
 import '../provider/cart_provider.dart';
 import '../utility/navigation_helper.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
+import 'checkout_screen.dart';
 
 class CartScreen extends StatefulWidget {
   final List<Coffee> coffeeList;
@@ -20,12 +21,12 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  int _selectedIndex = 1;
-   List<Coffee> get cartItems => 
-    widget.coffeeList.where((coffee) => coffee.isSelected).toList();
+  final int _selectedIndex = 1;
+  List<Coffee> get cartItems =>
+      widget.coffeeList.where((coffee) => coffee.isSelected).toList();
 
-  double get subtotal => 
-    cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
+  double get subtotal =>
+      cartItems.fold(0, (sum, item) => sum + (item.price * item.quantity));
   @override
   Widget build(BuildContext context) {
     return Consumer<CartProvider>(
@@ -36,21 +37,19 @@ class _CartScreenState extends State<CartScreen> {
           body: Column(
             children: [
               _buildHeader(cartProvider.items.length),
-              Expanded(
-                child: _buildCartItems(context, cartProvider),
-              ),
+              Expanded(child: _buildCartItems(context, cartProvider)),
               _buildCouponCode(),
               _buildOrderSummary(cartProvider),
               _buildFinalizeButton(context),
-            //   CustomBottomNavBar(
-            //   selectedIndex: _selectedIndex,
-            //   onItemSelected: (index) {
-            //     setState(() => _selectedIndex = index);
-            //   },
-            // ),
+              //   CustomBottomNavBar(
+              //   selectedIndex: _selectedIndex,
+              //   onItemSelected: (index) {
+              //     setState(() => _selectedIndex = index);
+              //   },
+              // ),
             ],
           ),
-           bottomNavigationBar: CustomBottomNavBar(
+          bottomNavigationBar: CustomBottomNavBar(
             selectedIndex: _selectedIndex,
             onItemSelected: (index) {
               NavigationHelper.navigateToPage(
@@ -61,9 +60,8 @@ class _CartScreenState extends State<CartScreen> {
               );
             },
           ),
-         // bottomNavigationBar: _buildBottomNavBar(),
+          // bottomNavigationBar: _buildBottomNavBar(),
         );
-
       },
     );
   }
@@ -76,14 +74,11 @@ class _CartScreenState extends State<CartScreen> {
         icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         onPressed: () => Navigator.pop(context),
       ),
-      title: const Text(
-        'Cart',
-        style: TextStyle(color: Colors.white),
-      ),
+      title: const Text('Cart', style: TextStyle(color: Colors.white)),
       actions: [
         IconButton(
           icon: const Icon(Icons.notifications_none, color: Colors.white),
-          onPressed: () {},
+           onPressed: () => Navigator.pushNamed(context, '/notifications'),
         ),
       ],
     );
@@ -106,10 +101,7 @@ class _CartScreenState extends State<CartScreen> {
           const SizedBox(height: 8),
           Text(
             'You have $itemCount items in your cart',
-            style: const TextStyle(
-              color: Colors.white70,
-              fontSize: 16,
-            ),
+            style: const TextStyle(color: Colors.white70, fontSize: 16),
           ),
         ],
       ),
@@ -131,9 +123,93 @@ class _CartScreenState extends State<CartScreen> {
             color: Colors.red,
             child: const Icon(Icons.delete, color: Colors.white),
           ),
+          confirmDismiss: (direction) async {
+            return await showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                  backgroundColor: const Color(0xFFCE9760),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text(
+                          'Remove from Cart?',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+                        const Text(
+                          'Lorem ipsum dolor sit amet consectetur. Vestibulum eget blandit mattis',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.white70, fontSize: 16),
+                        ),
+                        const SizedBox(height: 30),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF543A20),
+                                minimumSize: const Size(120, 45),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop(true);
+                              },
+                              child: const Text(
+                                'Yes',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 20),
+                            OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                side: const BorderSide(
+                                  color: Color(0xFF543A20),
+                                  width: 2,
+                                ),
+                                minimumSize: const Size(120, 45),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop(false);
+                              },
+                              child: const Text(
+                                'No',
+                                style: TextStyle(
+                                  color: Color(0xFF543A20),
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            );
+          },
           onDismissed: (direction) {
             cartProvider.removeFromCart(item);
           },
+
           child: Container(
             margin: const EdgeInsets.only(bottom: 15),
             padding: const EdgeInsets.all(15),
@@ -143,11 +219,7 @@ class _CartScreenState extends State<CartScreen> {
             ),
             child: Row(
               children: [
-                Image.asset(
-                  item.coffee.image,
-                  width: 60,
-                  height: 60,
-                ),
+                Image.asset(item.coffee.image, width: 60, height: 60),
                 const SizedBox(width: 15),
                 Expanded(
                   child: Column(
@@ -181,14 +253,11 @@ class _CartScreenState extends State<CartScreen> {
                 ),
                 Row(
                   children: [
-                    _buildQuantityButton(
-                      Icons.remove,
-                      () {
-                        if (item.quantity > 1) {
-                          cartProvider.updateQuantity(item, item.quantity - 1);
-                        }
-                      },
-                    ),
+                    _buildQuantityButton(Icons.remove, () {
+                      if (item.quantity > 1) {
+                        cartProvider.updateQuantity(item, item.quantity - 1);
+                      }
+                    }),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Text(
@@ -202,7 +271,8 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                     _buildQuantityButton(
                       Icons.add,
-                      () => cartProvider.updateQuantity(item, item.quantity + 1),
+                      () =>
+                          cartProvider.updateQuantity(item, item.quantity + 1),
                     ),
                   ],
                 ),
@@ -301,29 +371,44 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Widget _buildFinalizeButton(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: SizedBox(
-        width: double.infinity,
-        child: ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFFCE9760),
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
+    return Consumer<CartProvider>(
+      builder: (context, cartProvider, child) {
+        return Padding(
+          padding: const EdgeInsets.all(20),
+          child: SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: cartProvider.items.isEmpty ? null : () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CheckoutScreen(
+                      coffeeList: widget.coffeeList,
+                      onCartChanged: widget.onCartChanged,
+                    ),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFCE9760),
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                disabledBackgroundColor: const Color(0xFFCE9760).withOpacity(0.3),
+              ),
+              child: const Text(
+                'Finalize Order',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
-          child: const Text(
-            'Finalize Order',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 

@@ -69,16 +69,11 @@ class SettingsScreen extends StatelessWidget {
     bool isDestructive = false,
   }) {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      leading: Container(
-        width: 50,
-        height: 50,
-        decoration: BoxDecoration(
-          color: const Color(0xFFCE9760),
-          borderRadius: BorderRadius.circular(25),
-        ),
-        child: Icon(icon, color: Colors.white, size: 24),
-      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      leading: CircleAvatar(
+        radius: 50,
+        backgroundColor: const Color(0xFFCE9760),
+        child: Icon(icon, color: Color.fromRGBO(84, 58, 32, 1), size: 40)),
       title: Text(
         title,
         style: TextStyle(
@@ -89,7 +84,7 @@ class SettingsScreen extends StatelessWidget {
       ),
       trailing: const Icon(
         Icons.arrow_forward_ios,
-        size: 16,
+        size: 20,
         color: Colors.grey,
       ),
       onTap: onTap,
