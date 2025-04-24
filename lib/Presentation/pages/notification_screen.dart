@@ -18,52 +18,44 @@ class NotificationScreen extends StatelessWidget {
     return AppBar(
       backgroundColor: const Color(0xFF543A20),
       elevation: 0,
-     leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-        onPressed: () => NavigationHelper.goBack(context),
+      toolbarHeight: 100,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
+      ),
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 10),
+        child: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFFCE9760)),
+          onPressed: () => NavigationHelper.goBack(context),
+        ),
       ),
       title: const Text(
         'Notification',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 20,
+          fontSize: 22,
           fontWeight: FontWeight.bold,
         ),
       ),
-       actions: [
-        IconButton(
-          icon: const Icon(Icons.delete_outline, color: Colors.white),
-          onPressed: () => _showClearAllDialog(context),
-        ),
-      ],
+
       centerTitle: true,
     );
   }
-void _showClearAllDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Clear All Notifications'),
-        content: const Text('Are you sure you want to clear all notifications?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('All notifications cleared')),
-              );
-            },
-            child: const Text('Clear All'),
-          ),
-        ],
+
+  Widget _divider() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 5),
+      child: Divider(
+        color: const Color(0xFFCE9760).withOpacity(0.3),
+        thickness: 1,
+        //height: 10,
       ),
     );
   }
-  
+
   Widget _buildNotificationList() {
     return ListView(
       padding: const EdgeInsets.all(20),
@@ -75,90 +67,119 @@ void _showClearAllDialog(BuildContext context) {
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '1h',
         ),
+        _divider(),
         _buildNotificationItem(
           icon: Icons.percent,
           title: '20% discount Alert',
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '2h',
         ),
+        _divider(),
+
         _buildNotificationItem(
           icon: Icons.favorite_border,
           title: 'New Product launch',
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '23h',
         ),
-         _buildNotificationItem(
+        _divider(),
+
+        _buildNotificationItem(
           icon: Icons.delivery_dining,
           title: 'Order Delivered',
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '1h',
         ),
+        _divider(),
+
         _buildNotificationItem(
           icon: Icons.percent,
           title: '20% discount Alert',
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '2h',
         ),
+        _divider(),
+
         _buildNotificationItem(
           icon: Icons.favorite_border,
           title: 'New Product launch',
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '23h',
         ),
-         _buildNotificationItem(
+        _divider(),
+
+        _buildNotificationItem(
           icon: Icons.delivery_dining,
           title: 'Order Delivered',
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '1h',
         ),
+        _divider(),
+
         _buildNotificationItem(
           icon: Icons.percent,
           title: '20% discount Alert',
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '2h',
         ),
+        _divider(),
+
         _buildNotificationItem(
           icon: Icons.favorite_border,
           title: 'New Product launch',
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '23h',
         ),
-         _buildNotificationItem(
+        _divider(),
+
+        _buildNotificationItem(
           icon: Icons.delivery_dining,
           title: 'Order Delivered',
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '1h',
         ),
+        _divider(),
+
         _buildNotificationItem(
           icon: Icons.percent,
           title: '20% discount Alert',
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '2h',
         ),
+        _divider(),
+
         _buildNotificationItem(
           icon: Icons.favorite_border,
           title: 'New Product launch',
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '23h',
         ),
-         _buildNotificationItem(
+        _divider(),
+
+        _buildNotificationItem(
           icon: Icons.delivery_dining,
           title: 'Order Delivered',
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '1h',
         ),
+        _divider(),
+
         _buildNotificationItem(
           icon: Icons.percent,
           title: '20% discount Alert',
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '2h',
         ),
+        _divider(),
+
         _buildNotificationItem(
           icon: Icons.favorite_border,
           title: 'New Product launch',
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '23h',
         ),
+        _divider(),
+
         const SizedBox(height: 20),
         _buildSectionHeader('Yesterday'),
         _buildNotificationItem(
@@ -167,6 +188,8 @@ void _showClearAllDialog(BuildContext context) {
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '1d',
         ),
+        _divider(),
+
         _buildNotificationItem(
           icon: Icons.percent,
           title: '20% discount Alert',
@@ -179,53 +202,72 @@ void _showClearAllDialog(BuildContext context) {
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '1d',
         ),
-         _buildNotificationItem(
+        _divider(),
+
+        _buildNotificationItem(
           icon: Icons.delivery_dining,
           title: 'Order Delivered',
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '1d',
         ),
+        _divider(),
+
         _buildNotificationItem(
           icon: Icons.percent,
           title: '20% discount Alert',
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '1d',
         ),
-        _buildNotificationItem(
-          icon: Icons.favorite_border,
-          title: 'New Product launch',
-          description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
-          time: '1d',
-        ), _buildNotificationItem(
-          icon: Icons.delivery_dining,
-          title: 'Order Delivered',
-          description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
-          time: '1d',
-        ),
-        _buildNotificationItem(
-          icon: Icons.percent,
-          title: '20% discount Alert',
-          description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
-          time: '1d',
-        ),
+        _divider(),
+
         _buildNotificationItem(
           icon: Icons.favorite_border,
           title: 'New Product launch',
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '1d',
         ),
-         _buildNotificationItem(
+        _divider(),
+
+        _buildNotificationItem(
           icon: Icons.delivery_dining,
           title: 'Order Delivered',
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '1d',
         ),
+        _divider(),
+
         _buildNotificationItem(
           icon: Icons.percent,
           title: '20% discount Alert',
           description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
           time: '1d',
         ),
+        _divider(),
+
+        _buildNotificationItem(
+          icon: Icons.favorite_border,
+          title: 'New Product launch',
+          description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
+          time: '1d',
+        ),
+        _divider(),
+
+        _buildNotificationItem(
+          icon: Icons.delivery_dining,
+          title: 'Order Delivered',
+          description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
+          time: '1d',
+        ),
+        _divider(),
+
+        _buildNotificationItem(
+          icon: Icons.percent,
+          title: '20% discount Alert',
+          description: 'Lorem ipsum dolor sit amet consectetur.\nScelerisque',
+          time: '1d',
+        ),
+        _divider(),
+
         _buildNotificationItem(
           icon: Icons.favorite_border,
           title: 'New Product launch',
@@ -254,10 +296,7 @@ void _showClearAllDialog(BuildContext context) {
             onPressed: () {},
             child: const Text(
               'Mark all read',
-              style: TextStyle(
-                color: Colors.black54,
-                fontSize: 14,
-              ),
+              style: TextStyle(color: Colors.black54, fontSize: 14),
             ),
           ),
         ],
@@ -272,7 +311,7 @@ void _showClearAllDialog(BuildContext context) {
     required String time,
   }) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 15),
+      margin: const EdgeInsets.only(bottom: 5),
       child: Row(
         children: [
           Container(
@@ -282,11 +321,7 @@ void _showClearAllDialog(BuildContext context) {
               shape: BoxShape.circle,
               color: Color(0xFFCE9760),
             ),
-            child: Icon(
-              icon,
-              color: Colors.white,
-              size: 24,
-            ),
+            child: Icon(icon, color: Colors.white, size: 24),
           ),
           const SizedBox(width: 15),
           Expanded(
@@ -304,20 +339,14 @@ void _showClearAllDialog(BuildContext context) {
                 const SizedBox(height: 5),
                 Text(
                   description,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.black54,
-                  ),
+                  style: const TextStyle(fontSize: 14, color: Colors.black54),
                 ),
               ],
             ),
           ),
           Text(
             time,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Colors.black54,
-            ),
+            style: const TextStyle(fontSize: 14, color: Colors.black54),
           ),
         ],
       ),

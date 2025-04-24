@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/utility/navigation_helper.dart';
+
 class MyOrdersScreen extends StatelessWidget {
   const MyOrdersScreen({super.key});
 
@@ -12,23 +14,44 @@ class MyOrdersScreen extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
+    AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: const Color(0xFF543A20),
       elevation: 0,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-        onPressed: () => Navigator.pop(context),
+      toolbarHeight: 100,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
+      ),
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 10),
+        child: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFFCE9760)),
+          onPressed: () => NavigationHelper.goBack(context),
+        ),
       ),
       title: const Text(
         'My Orders',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 20,
+          fontSize: 22,
           fontWeight: FontWeight.bold,
         ),
       ),
+
       centerTitle: true,
+    );
+  }
+    Widget _divider() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 5),
+      child: Divider(
+        color: const Color(0xFFCE9760).withOpacity(0.3),
+        thickness: 1,
+        //height: 10,
+      ),
     );
   }
 
@@ -43,7 +66,7 @@ class MyOrdersScreen extends StatelessWidget {
           price: 40,
           status: 'In progress',
           isInProgress: true,
-        ),
+        ),_divider(),
         _buildOrderItem(
           image: 'assets/images/liberica.png',
           name: 'Liberica',
@@ -51,7 +74,7 @@ class MyOrdersScreen extends StatelessWidget {
           price: 24,
           status: 'In progress',
           isInProgress: true,
-        ),
+        ),_divider(),
         _buildOrderItem(
           image: 'assets/images/traice.png',
           name: 'Cirtus',
@@ -59,7 +82,7 @@ class MyOrdersScreen extends StatelessWidget {
           price: 24,
           status: 'delivered',
           isInProgress: false,
-        ),
+        ),_divider(),
         _buildOrderItem(
           image: 'assets/images/liberica.png',
           name: 'Liberica',
@@ -67,7 +90,7 @@ class MyOrdersScreen extends StatelessWidget {
           price: 24,
           status: 'delivered',
           isInProgress: false,
-        ),
+        ),_divider(),
         _buildOrderItem(
           image: 'assets/images/robusta.png',
           name: 'Robusta',
@@ -75,7 +98,7 @@ class MyOrdersScreen extends StatelessWidget {
           price: 24,
           status: 'delivered',
           isInProgress: false,
-        ),
+        ),_divider(),
         _buildOrderItem(
           image: 'assets/images/traice.png',
           name: 'Cirtus',
@@ -97,7 +120,7 @@ class MyOrdersScreen extends StatelessWidget {
     required bool isInProgress,
   }) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 15),
+      margin: const EdgeInsets.only(bottom: 5),
       child: Row(
         children: [
           // Product Image
