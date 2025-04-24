@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/utility/navigation_helper.dart';
+
 class PrivacyPolicyScreen extends StatelessWidget {
   const PrivacyPolicyScreen({super.key});
 
@@ -12,25 +14,33 @@ class PrivacyPolicyScreen extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
+  AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: const Color(0xFF543A20),
       elevation: 0,
-      leading: IconButton(
-        icon: const Icon(
-          Icons.arrow_back_ios,
-          color: Colors.white,
+      toolbarHeight: 100,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
         ),
-        onPressed: () => Navigator.pop(context),
+      ),
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 10),
+        child: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFFCE9760)),
+          onPressed: () => NavigationHelper.goBack(context),
+        ),
       ),
       title: const Text(
-        'Privacy & Policy',
+       'Privacy & Policy',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 20,
+          fontSize: 22,
           fontWeight: FontWeight.bold,
         ),
       ),
+
       centerTitle: true,
     );
   }
