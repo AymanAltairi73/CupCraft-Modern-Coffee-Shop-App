@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import '../../Presentation/pages/notification_screen.dart';
 import '../../data/model/Coffee.dart';
 import '../../Presentation/pages/home_screen.dart';
 import '../../Presentation/pages/cart_screen.dart';
 import '../../Presentation/pages/favorite_screen.dart';
 import '../../Presentation/pages/profile_screen.dart';
-import '../../Presentation/pages/NotificationScreen.dart';
 import '../../Presentation/pages/checkout_screen.dart';
 import 'coffee_page_transitions.dart';
 

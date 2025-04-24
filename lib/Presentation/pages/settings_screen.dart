@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/utility/navigation_helper.dart';
+
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
@@ -12,23 +14,44 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
+  AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: const Color(0xFF543A20),
       elevation: 0,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-        onPressed: () => Navigator.pop(context),
+      toolbarHeight: 100,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
+      ),
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 10),
+        child: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFFCE9760)),
+          onPressed: () => NavigationHelper.goBack(context),
+        ),
       ),
       title: const Text(
         'Settings',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 20,
+          fontSize: 22,
           fontWeight: FontWeight.bold,
         ),
       ),
+
       centerTitle: true,
+    );
+  }
+    Widget _divider() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 5),
+      child: Divider(
+        color: const Color(0xFFCE9760).withOpacity(0.3),
+        thickness: 1,
+        //height: 10,
+      ),
     );
   }
 
@@ -42,14 +65,14 @@ class SettingsScreen extends StatelessWidget {
           onTap: () {
             //(context) => Navigator.pushNamed(context, '/notification');
           },
-        ),
+        ), _divider(),
         _buildSettingItem(
           icon: Icons.lock,
           title: 'Password Manager',
           onTap: () {
             // Handle password manager
           },
-        ),
+        ),_divider(),
         _buildSettingItem(
           icon: Icons.credit_card,
           title: 'Delete Account',
@@ -79,13 +102,13 @@ class SettingsScreen extends StatelessWidget {
         style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w500,
-          color: isDestructive ? Colors.red : Colors.black,
+          //color: isDestructive ? Colors.red : Colors.black,
         ),
       ),
       trailing: const Icon(
         Icons.arrow_forward_ios,
         size: 20,
-        color: Colors.grey,
+        color: Color(0xFFCE9760),
       ),
       onTap: onTap,
     );
