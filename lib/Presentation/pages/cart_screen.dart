@@ -38,7 +38,7 @@ class _CartScreenState extends State<CartScreen> {
               _buildHeader(cartProvider.items.length),
               Expanded(child: _buildCartItems(context, cartProvider)),
               _buildCouponCode(),
-             // _buildOrderSummary(cartProvider),
+              // _buildOrderSummary(cartProvider),
               _buildFinalizeButton(context),
               //   CustomBottomNavBar(
               //   selectedIndex: _selectedIndex,
@@ -69,13 +69,13 @@ class _CartScreenState extends State<CartScreen> {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-        leading: IconButton(
+      leading: IconButton(
         icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         onPressed: () => NavigationHelper.goBack(context),
       ),
       title: const Text('Cart', style: TextStyle(color: Colors.white)),
       actions: [
-         IconButton(
+        IconButton(
           icon: const Icon(Icons.notifications_none, color: Colors.white),
           onPressed: () => NavigationHelper.goToNotifications(context),
         ),
@@ -85,7 +85,7 @@ class _CartScreenState extends State<CartScreen> {
 
   Widget _buildHeader(int itemCount) {
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.only(right: 130, bottom: 20, top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -93,14 +93,26 @@ class _CartScreenState extends State<CartScreen> {
             'My Order',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 24,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 8),
-          Text(
-            'You have $itemCount items in your cart',
-            style: const TextStyle(color: Colors.white70, fontSize: 16),
+          RichText(
+            text: TextSpan(
+              style: const TextStyle(color: Colors.white70, fontSize: 16),
+              children: [
+                TextSpan(text: 'You have $itemCount '),
+                const TextSpan(
+                  text: 'items',
+                  style: TextStyle(
+                    color: Color(0xFFCE9760),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const TextSpan(text: ' in your cart'),
+              ],
+            ),
           ),
         ],
       ),
@@ -120,8 +132,10 @@ class _CartScreenState extends State<CartScreen> {
             alignment: Alignment.centerRight,
             padding: const EdgeInsets.only(right: 20),
             color: Color(0xFF543A20),
-            child: const Icon(Icons.delete_outline, color: Colors.white , 
-            size: 25,
+            child: const Icon(
+              Icons.delete_outline,
+              color: Colors.white,
+              size: 25,
             ),
           ),
           confirmDismiss: (direction) async {
@@ -131,10 +145,10 @@ class _CartScreenState extends State<CartScreen> {
                 return Dialog(
                   backgroundColor: const Color(0xFFCE9760),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                   child: Container(
-                    padding: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(10),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -150,7 +164,10 @@ class _CartScreenState extends State<CartScreen> {
                         const Text(
                           'Lorem ipsum dolor sit amet consectetur. Vestibulum eget blandit mattis',
                           textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.white70, fontSize: 16),
+                          style: TextStyle(
+                            color: Color(0xFF543A20),
+                            fontSize: 14,
+                          ),
                         ),
                         const SizedBox(height: 30),
                         Row(
@@ -299,18 +316,21 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-   Widget _buildCouponCode() {
+  Widget _buildCouponCode() {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.all(12.0),
       child: Column(
         children: [
           Container(
             decoration: BoxDecoration(
-             // borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
               color: const Color(0xFFCE9760),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(13.0),
               child: TextField(
                 decoration: InputDecoration(
                   hintText: 'Enter Coupon Code here',
@@ -319,15 +339,20 @@ class _CartScreenState extends State<CartScreen> {
                   fillColor: const Color(0xFFCE9760).withOpacity(0.3),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
-                  
                   ),
                   suffixIcon: ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF543A20),
-                      padding: const EdgeInsets.symmetric(vertical: 17,horizontal: 25),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 17,
+                        horizontal: 30,
+                      ),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                        ),
                       ),
                     ),
                     child: const Text(
@@ -346,7 +371,6 @@ class _CartScreenState extends State<CartScreen> {
                 style: const TextStyle(color: Colors.white),
               ),
             ),
-            
           ),
           _buildOrderSummary(Provider.of<CartProvider>(context)),
         ],
@@ -358,11 +382,13 @@ class _CartScreenState extends State<CartScreen> {
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFFCE9760),
-        //borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(10),
+          bottomRight: Radius.circular(10),
+        ),
       ),
       child: Column(
         children: [
-          
           _buildSummaryRow('Sub-total', '\$${cartProvider.subtotal}'),
           //const SizedBox(height: 10),
           _buildSummaryRow('Shipping', '\$${cartProvider.shipping}'),
@@ -375,13 +401,18 @@ class _CartScreenState extends State<CartScreen> {
 
   Widget _buildSummaryRow(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(15.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             label,
             style: const TextStyle(color: Color(0xFF543A20), fontSize: 16),
+          ),
+          Expanded(
+            child: CustomPaint(
+              painter: DottedLinePainter(color: const Color(0xFF543A20)),
+              child: const SizedBox(height: 2),
+            ),
           ),
           Text(
             value,
@@ -404,24 +435,24 @@ class _CartScreenState extends State<CartScreen> {
           child: SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: cartProvider.items.isEmpty
-                  ? null
-                  : () => NavigationHelper.goToCheckout(
+              onPressed:
+                  cartProvider.items.isEmpty
+                      ? null
+                      : () => NavigationHelper.goToCheckout(
                         context,
                         coffeeList: widget.coffeeList,
                         onCartChanged: widget.onCartChanged,
                       ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF543A20),
-                padding: const EdgeInsets.symmetric(vertical: 15),
+                padding: const EdgeInsets.symmetric(vertical: 17),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
-                  side: const BorderSide(
-                    color: Color(0xFFCE9760),
-                    width: 2,
-                  ),
+                  side: const BorderSide(color: Color(0xFFCE9760), width: 1),
                 ),
-                disabledBackgroundColor: const Color(0xFFCE9760).withOpacity(0.3),
+                disabledBackgroundColor: const Color(
+                  0xFFCE9760,
+                ).withOpacity(0.3),
               ),
               child: const Text(
                 'Finalize Order',
@@ -437,35 +468,37 @@ class _CartScreenState extends State<CartScreen> {
       },
     );
   }
+}
 
-  // Widget _buildBottomNavBar() {
-  //   return Container(
-  //     height: 60,
-  //     decoration: BoxDecoration(
-  //       color: const Color(0xFFCE9760),
-  //       borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-  //     ),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //       children: [
-  //         IconButton(
-  //           icon: const Icon(Icons.home_outlined, color: Colors.white),
-  //           onPressed: () {},
-  //         ),
-  //         IconButton(
-  //           icon: const Icon(Icons.shopping_cart, color: Color(0xFF543A20)),
-  //           onPressed: () {},
-  //         ),
-  //         IconButton(
-  //           icon: const Icon(Icons.favorite_border, color: Colors.white),
-  //           onPressed: () {},
-  //         ),
-  //         IconButton(
-  //           icon: const Icon(Icons.person_outline, color: Colors.white),
-  //           onPressed: () {},
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+class DottedLinePainter extends CustomPainter {
+  final Color color;
+
+  DottedLinePainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint paint =
+        Paint()
+          ..color = color
+          ..strokeWidth = 1
+          ..strokeCap = StrokeCap.round;
+
+    const double dashWidth = 3;
+    const double dashSpace = 3;
+    const double padding = 10;
+    double startX = padding;
+    final double endX = size.width - padding;
+
+    while (startX < endX) {
+      canvas.drawLine(
+        Offset(startX, size.height / 2),
+        Offset(startX + dashWidth, size.height / 2),
+        paint,
+      );
+      startX += dashWidth + dashSpace;
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }

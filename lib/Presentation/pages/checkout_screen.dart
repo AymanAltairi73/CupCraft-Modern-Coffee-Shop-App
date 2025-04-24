@@ -31,7 +31,7 @@ class CheckoutScreen extends StatelessWidget {
               'Checkout',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 20,
+                fontSize: 22,
                 fontWeight: FontWeight.w600,
               ),
             ),

@@ -22,56 +22,55 @@ class _AddCardScreenState extends State<AddCardScreen> {
         return false;
       },
       child: Scaffold(
-      backgroundColor: const Color(0xFF543A20),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
+        backgroundColor: const Color(0xFF543A20),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
             icon: const Icon(Icons.home, color: Colors.white),
             onPressed: () => NavigationHelper.navigateToPage(context, 0),
           ),
-        title: const Text(
-          'Add card',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
+          title: const Text(
+            'Add card',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          centerTitle: true,
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.asset('assets/images/mastercard.png'),
+                const SizedBox(height: 40),
+                _buildCardHolderNameField(),
+                const SizedBox(height: 20),
+                _buildCardNumberField(),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(child: _buildExpiryDateField()),
+                    const SizedBox(width: 20),
+                    Expanded(child: _buildCVVField()),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                _buildSaveCardCheckbox(),
+                const SizedBox(height: 40),
+                _buildAddCardButton(),
+              ],
+            ),
           ),
         ),
-        centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.asset('assets/images/mastercard.png'),
-              const SizedBox(height: 40),
-              _buildCardHolderNameField(),
-              const SizedBox(height: 20),
-              _buildCardNumberField(),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(child: _buildExpiryDateField()),
-                  const SizedBox(width: 20),
-                  Expanded(child: _buildCVVField()),
-                ],
-              ),
-              const SizedBox(height: 20),
-              _buildSaveCardCheckbox(),
-              const SizedBox(height: 40),
-              _buildAddCardButton(),
-            ],
-          ),
-        ),
-      ),
-    ));
+    );
   }
-
-
 
   Widget _buildCardHolderNameField() {
     return Column(

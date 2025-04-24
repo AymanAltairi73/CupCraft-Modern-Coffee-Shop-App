@@ -161,18 +161,7 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
               fontWeight: FontWeight.bold,
             ),
           ),
-        ),
-
-        // Center(
-        //   child: Container(
-        //    /// padding: const EdgeInsets.all(15),
-        //     decoration: BoxDecoration(
-        //       color: const Color(0xFFCE9760),
-        //       //borderRadius: BorderRadius.circular(50),
-        //     ),
-        //     //child:
-        //   ),
-        // ),
+        )
       ],
     );
   }
