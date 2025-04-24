@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 
+import '../../core/utility/navigation_helper.dart';
+
 class PaymentDoneScreen extends StatelessWidget {
   const PaymentDoneScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+      return WillPopScope(
+      onWillPop: () async {
+        NavigationHelper.navigateToPage(context, 0);
+        return false;
+      },
+      child: Scaffold(
       backgroundColor: const Color(0xFF543A20),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () => Navigator.pushReplacementNamed(context, '/home'),
-        ),
+          leading: IconButton(
+            icon: const Icon(Icons.home, color: Colors.white),
+            onPressed: () => NavigationHelper.navigateToPage(context, 0),
+          ),
       ),
       body: Column(
         children: [
@@ -81,6 +88,6 @@ class PaymentDoneScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
+      ));
   }
 }

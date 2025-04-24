@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../core/utility/navigation_helper.dart';
 import '../../data/model/PaymentCard.dart';
 
 class AddCardScreen extends StatefulWidget {
@@ -15,15 +16,20 @@ class _AddCardScreenState extends State<AddCardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        NavigationHelper.navigateToPage(context, 0);
+        return false;
+      },
+      child: Scaffold(
       backgroundColor: const Color(0xFF543A20),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
+            icon: const Icon(Icons.home, color: Colors.white),
+            onPressed: () => NavigationHelper.navigateToPage(context, 0),
+          ),
         title: const Text(
           'Add card',
           style: TextStyle(
@@ -62,7 +68,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
           ),
         ),
       ),
-    );
+    ));
   }
 
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/utility/navigation_helper.dart';
+
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -7,7 +9,12 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+     return WillPopScope(
+      onWillPop: () async {
+        NavigationHelper.navigateToPage(context, 0);
+        return false;
+      },
+      child: Scaffold(
       backgroundColor: const Color(0xFF543A20),
       appBar: _buildAppBar(context),
       body: _buildBody(context),
@@ -23,16 +30,16 @@ class ProfileScreen extends StatelessWidget {
 //     );
 //   },
 // ),
-    );
+     ));
   }
 
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
+  AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      leading: IconButton(
+     leading: IconButton(
         icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-        onPressed: () => Navigator.pop(context),
+        onPressed: () => NavigationHelper.goBack(context),
       ),
       title: const Text(
         'Profile',
@@ -43,10 +50,10 @@ class ProfileScreen extends StatelessWidget {
         ),
       ),
       centerTitle: true,
-      actions: [
+     actions: [
         IconButton(
-          icon: const Icon(Icons.notifications_none, color: Colors.white),
-          onPressed: () => Navigator.pushNamed(context, '/notifications'),
+          icon: const Icon(Icons.edit, color: Colors.white),
+          onPressed: () => _navigateToEditProfile(context),
         ),
       ],
     );
@@ -56,9 +63,9 @@ class ProfileScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          const SizedBox(height: 20),
+          //const SizedBox(height: 20),
           _buildProfileHeader(),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
           _buildMenuItems(context),
         ],
       ),
@@ -66,77 +73,120 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget _buildProfileHeader() {
-    return Column(
-      children: [
-        Stack(
-          children: [
-            const CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage('assets/images/profile.png'),
-            ),
-            Positioned(
-              right: 0,
-              bottom: 0,
-              child: Container(
-                padding: const EdgeInsets.all(4),
-                decoration: const BoxDecoration(
-                  color: Color(0xFFCE9760),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(Icons.edit, color: Colors.white, size: 20),
+    return Container(
+            padding: const EdgeInsets.all(20),
+
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              const CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage('assets/images/profile.png'),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 15),
-        const Text(
-          'Ayman Altairi.',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+              // Positioned(
+              //   right: 0,
+              //   bottom: 0,
+              //   child: Container(
+              //     padding: const EdgeInsets.all(4),
+              //     decoration: const BoxDecoration(
+              //       color: Color(0xFFCE9760),
+              //       shape: BoxShape.circle,
+              //     ),
+              //     child: const Icon(Icons.edit, color: Colors.white, size: 20),
+              //   ),
+              // ),
+            ],
           ),
-        ),
-      ],
+          const SizedBox(height: 15),
+          const Text(
+            'Ayman Altairi.',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+           const SizedBox(height: 5),
+          Text(
+            'aymanaltairi8@gmail.com',
+            style: TextStyle(
+              color: Colors.white.withOpacity(0.7),
+              fontSize: 16,
+            ),
+          ),
+        ],
+      ),
     );
   }
+  void _navigateToEditProfile(BuildContext context) {
+    Navigator.pushNamed(context, '/edit-profile');
+  }
 
+  void _navigateToPaymentMethods(BuildContext context) {
+    Navigator.pushNamed(context, '/payment-methods');
+  }
+
+  void _navigateToAddresses(BuildContext context) {
+    Navigator.pushNamed(context, '/addresses');
+  }
+
+  void _navigateToOrderHistory(BuildContext context) {
+    Navigator.pushNamed(context, '/order-history');
+  }
+
+  void _navigateToSettings(BuildContext context) {
+    Navigator.pushNamed(context, '/settings');
+  }
+
+  void _navigateToSupport(BuildContext context) {
+    Navigator.pushNamed(context, '/support');
+  }
+
+ 
   Widget _buildMenuItems(BuildContext context) {
-    return Column(
-      children: [
-        _buildMenuItem(
-          icon: Icons.person_outline,
-          title: 'Your Profile',
-          onTap: () => Navigator.pushNamed(context, '/edit-profile'),
-        ),
-        _buildMenuItem(
-          icon: Icons.shopping_bag_outlined,
-          title: 'My Orders',
-          onTap: () => Navigator.pushNamed(context, '/my-orders'),
-        ),
-        _buildMenuItem(
-          icon: Icons.settings_outlined,
-          title: 'Setting',
-          onTap: () => Navigator.pushNamed(context, '/settings'),
-        ),
-        _buildMenuItem(
-          icon: Icons.privacy_tip_outlined,
-          title: 'Privacy policy',
-          onTap: () => Navigator.pushNamed(context, '/privacy-policy'),
-        ),
-        _buildMenuItem(
-          icon: Icons.person_add_outlined,
-          title: 'Invite Friend',
-          onTap: () => Navigator.pushNamed(context, '/invite-friend'),
-        ),
-        _buildMenuItem(
-          icon: Icons.logout,
-          title: 'Logout',
-          onTap: () {
-            // Handle logout logic
-          },
-        ),
-      ],
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        children: [
+          _buildMenuItem(
+            icon: Icons.payment,
+            title: 'Payment Methods',
+            onTap: () => _navigateToPaymentMethods(context),
+          ),
+          _buildMenuItem(
+            icon: Icons.location_on,
+            title: 'Delivery Address',
+            onTap: () => _navigateToAddresses(context),
+          ),
+          _buildMenuItem(
+            icon: Icons.history,
+            title: 'Order History',
+            onTap: () => _navigateToOrderHistory(context),
+          ),
+          _buildMenuItem(
+            icon: Icons.notifications,
+            title: 'Notifications',
+            onTap: () => NavigationHelper.goToNotifications(context),
+          ),
+          _buildMenuItem(
+            icon: Icons.settings,
+            title: 'Settings',
+            onTap: () => _navigateToSettings(context),
+          ),
+          _buildMenuItem(
+            icon: Icons.help,
+            title: 'Help & Support',
+            onTap: () => _navigateToSupport(context),
+          ),
+          _buildMenuItem(
+            icon: Icons.logout,
+            title: 'Logout',
+            onTap: () => _showLogoutDialog(context),
+            textColor: Colors.red,
+          ),
+        ],
+      ),
     );
   }
 
@@ -144,31 +194,62 @@ class ProfileScreen extends StatelessWidget {
     required IconData icon,
     required String title,
     required VoidCallback onTap,
+     Color? textColor,
   }) {
     return ListTile(
-      leading: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-          color: const Color(0xFFCE9760),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Icon(icon, color: Colors.white),
-      ),
+        leading: Icon(icon, color: textColor ?? Colors.white),
       title: Text(
         title,
-        style: const TextStyle(
-          color: Colors.white,
+        style: TextStyle(
+          color: textColor ?? Colors.white,
           fontSize: 16,
-          fontWeight: FontWeight.w500,
         ),
       ),
-      trailing: const Icon(
+      // leading: Container(
+      //   width: 40,
+      //   height: 40,
+      //   decoration: BoxDecoration(
+      //     color: const Color(0xFFCE9760),
+      //     borderRadius: BorderRadius.circular(20),
+      //   ),
+      //   child: Icon(icon, color: Colors.white),
+      // ),
+      //  title: Text(
+      //   title,
+      //   style: TextStyle(
+      //     color: textColor ?? Colors.white,
+      //     fontSize: 16,
+      //   ),
+      // ),
+        trailing: const Icon(
         Icons.arrow_forward_ios,
         color: Colors.white,
         size: 16,
       ),
       onTap: onTap,
+    );
+  }
+   void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Logout'),
+        content: const Text('Are you sure you want to logout?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+             
+              Navigator.pop(context);
+              NavigationHelper.navigateToPage(context, 0);
+            },
+            child: const Text('Logout'),
+          ),
+        ],
+      ),
     );
   }
 

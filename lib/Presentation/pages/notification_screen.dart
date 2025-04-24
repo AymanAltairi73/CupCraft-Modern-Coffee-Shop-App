@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/utility/navigation_helper.dart';
+
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
 
@@ -12,13 +14,13 @@ class NotificationScreen extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
+  AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: const Color(0xFF543A20),
       elevation: 0,
-      leading: IconButton(
+     leading: IconButton(
         icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-        onPressed: () => Navigator.pop(context),
+        onPressed: () => NavigationHelper.goBack(context),
       ),
       title: const Text(
         'Notification',
@@ -28,10 +30,40 @@ class NotificationScreen extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
+       actions: [
+        IconButton(
+          icon: const Icon(Icons.delete_outline, color: Colors.white),
+          onPressed: () => _showClearAllDialog(context),
+        ),
+      ],
       centerTitle: true,
     );
   }
-
+void _showClearAllDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Clear All Notifications'),
+        content: const Text('Are you sure you want to clear all notifications?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('All notifications cleared')),
+              );
+            },
+            child: const Text('Clear All'),
+          ),
+        ],
+      ),
+    );
+  }
+  
   Widget _buildNotificationList() {
     return ListView(
       padding: const EdgeInsets.all(20),

@@ -178,7 +178,7 @@ class RegisterScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Already have an account? ',
+                      'Already have an account?',
                       style: TextStyle(color: Colors.white),
                     ),
                     TextButton(
@@ -205,10 +205,10 @@ class RegisterScreen extends StatelessWidget {
 
   Widget _socialLoginButton(String iconPath) {
     return Container(
-      width: 60,
-      height: 60,
+      width: 65,
+      height: 65,
       decoration: BoxDecoration(
-        color: const Color(0xFF1E1E1E),
+       color:Colors.black.withOpacity(0.7),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Center(

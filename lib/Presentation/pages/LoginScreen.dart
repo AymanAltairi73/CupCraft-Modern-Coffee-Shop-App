@@ -183,10 +183,10 @@ class LoginScreen extends StatelessWidget {
 
   Widget _socialLoginButton(String iconPath) {
     return Container(
-      width: 70,
-      height: 70,
+      width: 65,
+      height: 65,
       decoration: BoxDecoration(
-        color: const Color(0xFF1E1E1E),
+        color:  Colors.black.withOpacity(0.7),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Center(

@@ -4,7 +4,6 @@ import '../../data/model/Coffee.dart';
 import '../../core/provider/cart_provider.dart';
 import '../../core/utility/navigation_helper.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
-import 'checkout_screen.dart';
 
 class CartScreen extends StatefulWidget {
   final List<Coffee> coffeeList;
@@ -39,7 +38,7 @@ class _CartScreenState extends State<CartScreen> {
               _buildHeader(cartProvider.items.length),
               Expanded(child: _buildCartItems(context, cartProvider)),
               _buildCouponCode(),
-              _buildOrderSummary(cartProvider),
+             // _buildOrderSummary(cartProvider),
               _buildFinalizeButton(context),
               //   CustomBottomNavBar(
               //   selectedIndex: _selectedIndex,
@@ -70,15 +69,15 @@ class _CartScreenState extends State<CartScreen> {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      leading: IconButton(
+        leading: IconButton(
         icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-        onPressed: () => Navigator.pop(context),
+        onPressed: () => NavigationHelper.goBack(context),
       ),
       title: const Text('Cart', style: TextStyle(color: Colors.white)),
       actions: [
-        IconButton(
+         IconButton(
           icon: const Icon(Icons.notifications_none, color: Colors.white),
-           onPressed: () => Navigator.pushNamed(context, '/notifications'),
+          onPressed: () => NavigationHelper.goToNotifications(context),
         ),
       ],
     );
@@ -120,8 +119,10 @@ class _CartScreenState extends State<CartScreen> {
           background: Container(
             alignment: Alignment.centerRight,
             padding: const EdgeInsets.only(right: 20),
-            color: Colors.red,
-            child: const Icon(Icons.delete, color: Colors.white),
+            color: Color(0xFF543A20),
+            child: const Icon(Icons.delete_outline, color: Colors.white , 
+            size: 25,
+            ),
           ),
           confirmDismiss: (direction) async {
             return await showDialog(
@@ -298,52 +299,74 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  Widget _buildCouponCode() {
+   Widget _buildCouponCode() {
     return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Row(
+      padding: const EdgeInsets.all(15.0),
+      child: Column(
         children: [
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Enter Coupon Code here',
-                hintStyle: const TextStyle(color: Colors.white70),
-                filled: true,
-                fillColor: const Color(0xFFCE9760).withOpacity(0.3),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide.none,
+          Container(
+            decoration: BoxDecoration(
+             // borderRadius: BorderRadius.circular(15),
+              color: const Color(0xFFCE9760),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Enter Coupon Code here',
+                  hintStyle: const TextStyle(color: Color(0xFF543A20)),
+                  filled: true,
+                  fillColor: const Color(0xFFCE9760).withOpacity(0.3),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  
+                  ),
+                  suffixIcon: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF543A20),
+                      padding: const EdgeInsets.symmetric(vertical: 17,horizontal: 25),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    child: const Text(
+                      'Apply',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 15,
+                  ),
                 ),
-              ),
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
-          const SizedBox(width: 10),
-          ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF543A20),
-              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+                style: const TextStyle(color: Colors.white),
               ),
             ),
-            child: const Text('Apply'),
+            
           ),
+          _buildOrderSummary(Provider.of<CartProvider>(context)),
         ],
       ),
     );
   }
 
   Widget _buildOrderSummary(CartProvider cartProvider) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFFCE9760),
+        //borderRadius: BorderRadius.circular(15),
+      ),
       child: Column(
         children: [
+          
           _buildSummaryRow('Sub-total', '\$${cartProvider.subtotal}'),
-          const SizedBox(height: 10),
+          //const SizedBox(height: 10),
           _buildSummaryRow('Shipping', '\$${cartProvider.shipping}'),
-          const SizedBox(height: 10),
+          // SizedBox(height: 10),
           _buildSummaryRow('Total', '\$${cartProvider.total}'),
         ],
       ),
@@ -351,22 +374,25 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Widget _buildSummaryRow(String label, String value) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(color: Colors.white70, fontSize: 16),
-        ),
-        Text(
-          value,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(color: Color(0xFF543A20), fontSize: 16),
           ),
-        ),
-      ],
+          Text(
+            value,
+            style: const TextStyle(
+              color: Color(0xFF543A20),
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -378,22 +404,22 @@ class _CartScreenState extends State<CartScreen> {
           child: SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: cartProvider.items.isEmpty ? null : () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CheckoutScreen(
-                      coffeeList: widget.coffeeList,
-                      onCartChanged: widget.onCartChanged,
-                    ),
-                  ),
-                );
-              },
+              onPressed: cartProvider.items.isEmpty
+                  ? null
+                  : () => NavigationHelper.goToCheckout(
+                        context,
+                        coffeeList: widget.coffeeList,
+                        onCartChanged: widget.onCartChanged,
+                      ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFCE9760),
+                backgroundColor: const Color(0xFF543A20),
                 padding: const EdgeInsets.symmetric(vertical: 15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
+                  side: const BorderSide(
+                    color: Color(0xFFCE9760),
+                    width: 2,
+                  ),
                 ),
                 disabledBackgroundColor: const Color(0xFFCE9760).withOpacity(0.3),
               ),

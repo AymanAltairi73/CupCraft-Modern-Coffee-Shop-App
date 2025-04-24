@@ -6,27 +6,23 @@ import '../../core/provider/cart_provider.dart';
 
 class CoffeeDetailsScreen extends StatefulWidget {
   final Coffee coffee;
-final Function(Coffee) onFavoriteChanged;
+  final Function(Coffee) onFavoriteChanged;
   final Function(Coffee, {bool? isSelected, int? quantity}) onCartChanged;
 
-
   const CoffeeDetailsScreen({
-    super.key, 
+    super.key,
     required this.coffee,
     required this.onFavoriteChanged,
     required this.onCartChanged,
   });
 
-   @override
+  @override
   State<CoffeeDetailsScreen> createState() => _CoffeeDetailsScreenState();
 }
 
 class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
-
   int _quantity = 1;
   String _selectedSize = 'Medium';
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -76,12 +72,12 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            IconButton(
+ IconButton(
               icon: Icon(
                 widget.coffee.isFavorite
                     ? Icons.favorite
                     : Icons.favorite_border,
-                color: Colors.white,
+                color: widget.coffee.isFavorite ? Colors.red : Colors.white,
               ),
               onPressed: () {
                 setState(() {
@@ -103,9 +99,14 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
       maxChildSize: 0.9,
       builder: (context, scrollController) {
         return Container(
-          decoration: const BoxDecoration(
-            color: Color(0xFF543A20),
-            borderRadius: BorderRadius.vertical(top: Radius.circular(60)),
+          decoration: BoxDecoration(
+            color: const Color(0xFF543A20),
+            borderRadius: BorderRadius.vertical(
+              top: Radius.elliptical(
+                MediaQuery.of(context).size.width,
+                70,
+              ),
+            ),
           ),
           child: SingleChildScrollView(
             controller: scrollController,
@@ -199,28 +200,24 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
                 return GestureDetector(
                   onTap: () => setState(() => _selectedSize = size),
                   child: Container(
-                    padding: const EdgeInsets.only(
-                      top: 30,
-                      bottom: 10,
-                      left: 20,
-                      right: 20,
-                    ),
+                    padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color:
-                          isSelected
-                              ? const Color(0xFFCE9760)
-                              : Colors.transparent,
+                      color: const Color(0xFFCE9760),
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(
                         color: const Color(0xFFCE9760),
-                        width: 2,
+                        width: 5,
                       ),
                     ),
-                    child: Icon(
-                      Icons.coffee,
+                    child: Image.asset(
+                      size == 'Small'
+                          ? 'assets/images/small.png'
+                          : size == 'Medium'
+                          ? 'assets/images/meduim.png'
+                          : 'assets/images/large.png',
                       color:
-                          isSelected ? Colors.white : const Color(0xFFCE9760),
-                      size:
+                          isSelected ? Colors.white : const Color(0xFF543A20),
+                      height:
                           size == 'Small'
                               ? 30
                               : size == 'Medium'
@@ -232,7 +229,7 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
               }).toList(),
         ),
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          //crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children:
               ['Small', 'Medium', 'Large'].map((size) {
@@ -304,28 +301,59 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
           color: const Color(0xFFCE9760),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Icon(icon, color: Colors.white),
+        child: Icon(icon, color: Color(0xFF543A20)),
       ),
     );
   }
 
-   Widget _buildAddToCartButton() {
+  Widget _buildAddToCartButton() {
     return Row(
       children: [
         Expanded(
-          flex: 2,
+          flex: 1,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            // decoration: BoxDecoration(
+            //   color: Colors.transparent,
+            //   border: Border.all(color: const Color(0xFFCE9760), width: 2),
+            //   borderRadius: BorderRadius.circular(15),
+            // ),
+            child: Text(
+              '\$${(widget.coffee.price * _quantity).toStringAsFixed(2)}',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.white,
+                //color: const Color(0xFFCE9760),
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 15),
+        Expanded(
+          flex: 4,
           child: ElevatedButton(
             onPressed: () {
-            final cartItem = CartItem(
+              final cartItem = CartItem(
                 coffee: widget.coffee,
                 quantity: _quantity,
                 additionalNote: _selectedSize,
               );
-                Provider.of<CartProvider>(context, listen: false).addToCart(cartItem);
+              Provider.of<CartProvider>(
+                context,
+                listen: false,
+              ).addToCart(cartItem);
               // Add to cart logic here
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('Added to cart successfully!'),
+                  content: Center(child: Text('Added to cart successfully!',
+                  style: TextStyle(
+                    color: Color(0xFF543A20),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                   )),
                   backgroundColor: Color(0xFFCE9760),
                 ),
               );
@@ -340,32 +368,8 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
             child: const Text(
               'Add to cart',
               style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: 15),
-        Expanded(
-          flex: 1,
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              border: Border.all(
-                color: const Color(0xFFCE9760),
-                width: 2,
-              ),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Text(
-              '\$${(widget.coffee.price * _quantity).toStringAsFixed(2)}',
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Color(0xFFCE9760),
-                fontSize: 18,
+                color: Color(0xFF543A20),
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -374,7 +378,4 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
       ],
     );
   }
-
 }
-
-

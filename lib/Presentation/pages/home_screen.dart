@@ -50,7 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   int _selectedCategory = 0;
-
   void updateFavoriteStatus(Coffee coffee) {
     setState(() {
       coffee.isFavorite = !coffee.isFavorite;
@@ -99,11 +98,9 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.all(20),
       child: Row(
         children: [
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, '/profile');
-            },
-            child: CircleAvatar(
+         GestureDetector(
+            onTap: () => NavigationHelper.navigateToPage(context, 3, replace: false),
+            child: const CircleAvatar(
               radius: 25,
               backgroundImage: AssetImage('assets/images/profile.png'),
             ),
@@ -129,12 +126,16 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.search, color: Colors.white),
-            onPressed: () {},
+            icon: const Icon(Icons.search, color: Colors.white, size: 25),
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Search coming soon!')),
+              );
+            },
           ),
           IconButton(
-            icon: const Icon(Icons.notifications_none, color: Colors.white),
-            onPressed: () => Navigator.pushNamed(context, '/notifications'),
+            icon: const Icon(Icons.notifications_none, color: Colors.white, size: 25),
+            onPressed: () => NavigationHelper.goToNotifications(context),
           ),
         ],
       ),
@@ -327,7 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         coffee.isFavorite
                             ? Icons.favorite
                             : Icons.favorite_border,
-                        color: Colors.white,
+                        color: coffee.isFavorite ? Colors.red : Colors.white,
                       ),
                     ),
                   ),
