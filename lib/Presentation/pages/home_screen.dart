@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(Icons.search, color: Colors.white, size: 25),
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Search coming soon!')),
+                const SnackBar(content: Center(child: Text('Search coming soon!'))),
               );
             },
           ),

@@ -4,7 +4,7 @@ import '../../core/utility/navigation_helper.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
 
 class FavoriteScreen extends StatefulWidget {
-   final List<Coffee> coffeeList;
+  final List<Coffee> coffeeList;
   final Function(Coffee) onFavoriteChanged;
 
   const FavoriteScreen({
@@ -23,7 +23,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 
   @override
   Widget build(BuildContext context) {
- final favoriteCoffees = widget.coffeeList.where((coffee) => coffee.isFavorite).toList();
+    final favoriteCoffees =
+        widget.coffeeList.where((coffee) => coffee.isFavorite).toList();
     return Scaffold(
       backgroundColor: const Color(0xFF543A20),
       body: SafeArea(
@@ -32,22 +33,15 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
             _buildAppBar(),
             _buildSearchBar(),
             Expanded(
-              child: favoriteCoffees.isEmpty
-                  ? _buildEmptyState()
-                  : _buildFavoritesList(favoriteCoffees),
+              child:
+                  favoriteCoffees.isEmpty
+                      ? _buildEmptyState()
+                      : _buildFavoritesList(favoriteCoffees),
             ),
-            // CustomBottomNavBar(
-            //   selectedIndex: _selectedIndex,
-            //   onItemSelected: (index) {
-            //     if (index != _selectedIndex) {
-            //       setState(() {});
-            //     }
-            //   },
-            // ),
           ],
         ),
       ),
-        bottomNavigationBar: CustomBottomNavBar(
+      bottomNavigationBar: CustomBottomNavBar(
         selectedIndex: _selectedIndex,
         onItemSelected: (index) {
           NavigationHelper.navigateToPage(
@@ -58,7 +52,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           );
         },
       ),
-      
     );
   }
 
@@ -70,16 +63,13 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         children: [
           GestureDetector(
             onTap: () => Navigator.pop(context),
-            child: const Icon(
-              Icons.arrow_back_ios,
-              color: Colors.white,
-            ),
+            child: const Icon(Icons.arrow_back_ios, color: Colors.white),
           ),
           const Text(
             'Favorite',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 20,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -87,10 +77,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
             onTap: () {
               Navigator.pushNamed(context, '/notification');
             },
-            child: const Icon(
-              Icons.notifications_none,
-              color: Colors.white,
-            ),
+            child: const Icon(Icons.notifications_none, color: Colors.white),
           ),
         ],
       ),
@@ -110,9 +97,32 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           decoration: InputDecoration(
             hintText: 'Search Your Favorite Product',
             hintStyle: TextStyle(color: Colors.grey[600]),
-            prefixIcon: const Icon(Icons.search, color: Color(0xFF543A20)),
+            suffixIcon: Container(
+              //margin: const EdgeInsets.all(5),
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFCE9760),
+                  padding: const EdgeInsets.all(12),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    ),
+                  ),
+                ),
+                child: const Icon(
+                  Icons.search_sharp,
+                  color: Color(0xFF543A20),
+                  size: 30,
+                ),
+              ),
+            ),
             border: InputBorder.none,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 13,
+            ),
           ),
         ),
       ),
@@ -174,10 +184,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               children: [
                 Expanded(
                   child: Center(
-                    child: Image.asset(
-                      coffee.image,
-                      fit: BoxFit.cover,
-                    ),
+                    child: Image.asset(coffee.image, fit: BoxFit.cover),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -222,11 +229,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                   coffee.isFavorite = !coffee.isFavorite;
                 });
               },
-              child: const Icon(
-                Icons.favorite,
-                color: Colors.red,
-                size: 24,
-              ),
+              child: const Icon(Icons.favorite, color: Colors.red, size: 24),
             ),
           ),
         ],
