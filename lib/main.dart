@@ -1,10 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'data/model/Coffee.dart';
+import 'package:provider/provider.dart';
+
+import 'Presentation/pages/LoginScreen.dart';
 import 'Presentation/pages/RegisterScreen.dart';
 import 'Presentation/pages/add_paymentCard_screen.dart';
 import 'Presentation/pages/cart_screen.dart';
 import 'Presentation/pages/checkout_screen.dart';
 import 'Presentation/pages/favorite_screen.dart';
+import 'Presentation/pages/home_screen.dart';
 import 'Presentation/pages/my_orders_screen.dart';
 import 'Presentation/pages/notification_screen.dart';
 import 'Presentation/pages/onboarding_screen.dart';
@@ -15,12 +19,12 @@ import 'Presentation/pages/settings_screen.dart';
 import 'Presentation/pages/splash_screen.dart';
 import 'Presentation/pages/track_order_screen.dart';
 import 'core/provider/cart_provider.dart';
-import 'package:provider/provider.dart';
+import 'data/model/Coffee.dart';
+import 'firebase_options.dart';
 
-import 'Presentation/pages/LoginScreen.dart';
-import 'Presentation/pages/home_screen.dart';
-
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     ChangeNotifierProvider(
       create: (_) => CartProvider(),
@@ -39,7 +43,7 @@ class CoffeeApp extends StatelessWidget {
       title: 'CoffeeScript',
       theme: ThemeData(
         fontFamily: 'Montserrat',
-        // إضافة ثيم موحد للتطبيق
+
         primaryColor: const Color(0xFFCE9760),
         scaffoldBackgroundColor: const Color(0xFF543A20),
         colorScheme: ColorScheme.fromSeed(
@@ -47,7 +51,7 @@ class CoffeeApp extends StatelessWidget {
           primary: const Color(0xFFCE9760),
           secondary: const Color(0xFF543A20),
         ),
-        // تحسين أنماط النصوص
+
         textTheme: const TextTheme(
           headlineLarge: TextStyle(
             color: Colors.white,
@@ -58,7 +62,7 @@ class CoffeeApp extends StatelessWidget {
           bodyMedium: TextStyle(color: Colors.white70, fontSize: 14),
         ),
       ),
-      // تنظيم المسارات بشكل أفضل
+
       initialRoute: '/',
       onGenerateRoute: (settings) {
         switch (settings.name) {
@@ -127,20 +131,21 @@ class CoffeeApp extends StatelessWidget {
             );
           case '/my_orders':
             return MaterialPageRoute(builder: (_) => const MyOrdersScreen());
-            case '/edit-profile':
-  //return MaterialPageRoute(builder: (_) => const EditProfileScreen());
-case '/my-orders':
-  return MaterialPageRoute(builder: (_) => const MyOrdersScreen());
-  case '/privacy-policy':
-  return MaterialPageRoute(builder: (_) => const PrivacyPolicyScreen());
-case '/settings':
-  return MaterialPageRoute(builder: (_) => const SettingsScreen());
-  
-//case '/privacy-policy':
- //return MaterialPageRoute(builder: (_) => const PrivacyPolicyScreen());
-//case '/invite-friend':
-  //return MaterialPageRoute(builder: (_) => const InviteFriendScreen());
-  
+          case '/edit-profile':
+          //return MaterialPageRoute(builder: (_) => const EditProfileScreen());
+          case '/my-orders':
+            return MaterialPageRoute(builder: (_) => const MyOrdersScreen());
+          case '/privacy-policy':
+            return MaterialPageRoute(
+              builder: (_) => const PrivacyPolicyScreen(),
+            );
+          case '/settings':
+            return MaterialPageRoute(builder: (_) => const SettingsScreen());
+
+          //case '/privacy-policy':
+          //return MaterialPageRoute(builder: (_) => const PrivacyPolicyScreen());
+          //case '/invite-friend':
+          //return MaterialPageRoute(builder: (_) => const InviteFriendScreen());
 
           default:
             return MaterialPageRoute(
