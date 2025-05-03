@@ -49,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
       image: 'assets/images/arabica.png', // Replace with actual image if available
       description: 'Strong and concentrated',
     ),
+    
   ];
 
   // This list will hold the coffees currently displayed based on the category
@@ -88,7 +89,8 @@ class _HomeScreenState extends State<HomeScreen> {
           _displayedCoffeeList = _allCoffees.take(min(1, _allCoffees.length)).toList();
           break;
         case 4: // Bakery - Show none from this list (or implement specific bakery logic later)
-          _displayedCoffeeList = [];
+          _displayedCoffeeList = _allCoffees.take(min(2, _allCoffees.length)).toList();
+          //_displayedCoffeeList = [];
           break;
         default: // Default case, show all
           _displayedCoffeeList = List.from(_allCoffees);

@@ -95,6 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (mounted) setState(() => _isLoading = false);
     }
   }
+
   Future<void> _resetPassword() async {
     if (_emailController.text.isEmpty) {
       Get.snackbar(
@@ -218,12 +219,12 @@ class _LoginScreenState extends State<LoginScreen> {
   //   }
   // }
 
-
-    Future<void> _handleGoogleSignIn() async {
+  Future<void> _handleGoogleSignIn() async {
     try {
       setState(() => _isLoading = true);
 
-      final UserCredential? userCredential = await _authService.signInWithGoogle();
+      final UserCredential? userCredential =
+          await _authService.signInWithGoogle();
 
       if (userCredential != null && mounted) {
         // Show success message
@@ -470,19 +471,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         _socialLoginButton(
                           'assets/images/facebook.png',
-                          onTap: () {
-                         
-                          },
+                          onTap: () {},
                         ),
                         _socialLoginButton(
                           'assets/images/google.png',
-                       onTap: _handleGoogleSignIn,
+                          onTap: _handleGoogleSignIn,
                         ),
                         _socialLoginButton(
                           'assets/images/twitter.png',
-                          onTap: () {
-                         
-                          },
+                          onTap: () {},
                         ),
                       ],
                     ),

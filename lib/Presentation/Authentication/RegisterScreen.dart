@@ -12,7 +12,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-    final AuthService _authService = AuthService();
+  final AuthService _authService = AuthService();
 
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
@@ -56,20 +56,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
       // Create user account
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
+            email: _emailController.text.trim(),
+            password: _passwordController.text.trim(),
+          );
 
       // Update user profile with name
       await userCredential.user?.updateDisplayName(_nameController.text.trim());
 
       // Navigate to home screen
-     if (mounted) {
-        Navigator.pushNamedAndRemoveUntil(
-          context, 
-          '/home',
-          (route) => false,
-        );
+      if (mounted) {
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       }
     } on FirebaseAuthException catch (e) {
       print("Firebase Auth Error: ${e.code} - ${e.message}"); // For debugging
@@ -96,11 +92,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
       if (mounted) setState(() => _isLoading = false);
     }
   }
-    Future<void> _handleGoogleSignIn() async {
+
+  Future<void> _handleGoogleSignIn() async {
     try {
       setState(() => _isLoading = true);
 
-      final UserCredential? userCredential = await _authService.signInWithGoogle();
+      final UserCredential? userCredential =
+          await _authService.signInWithGoogle();
 
       if (userCredential != null && mounted) {
         // Show success message
@@ -272,8 +270,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   : Icons.visibility_off,
                               color: const Color(0xFFCE9760),
                             ),
-                            onPressed: () => setState(
-                                () => _obscurePassword = !_obscurePassword),
+                            onPressed:
+                                () => setState(
+                                  () => _obscurePassword = !_obscurePassword,
+                                ),
                           ),
                           contentPadding: const EdgeInsets.all(16),
                           errorStyle: const TextStyle(color: Color(0xFFCE9760)),
@@ -294,8 +294,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           if (!value.contains(RegExp(r'[0-9]'))) {
                             return 'Password must contain at least one number';
                           }
-                          if (!value
-                              .contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+                          if (!value.contains(
+                            RegExp(r'[!@#$%^&*(),.?":{}|<>]'),
+                          )) {
                             return 'Password must contain at least one special character';
                           }
                           return null;
@@ -327,8 +328,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   : Icons.visibility_off,
                               color: const Color(0xFFCE9760),
                             ),
-                            onPressed: () => setState(() =>
-                                _obscureConfirmPassword = !_obscureConfirmPassword),
+                            onPressed:
+                                () => setState(
+                                  () =>
+                                      _obscureConfirmPassword =
+                                          !_obscureConfirmPassword,
+                                ),
                           ),
                           contentPadding: const EdgeInsets.all(16),
                           errorStyle: const TextStyle(color: Color(0xFFCE9760)),
@@ -355,26 +360,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            disabledBackgroundColor:
-                                const Color(0xFFCE9760).withOpacity(0.6),
+                            disabledBackgroundColor: const Color(
+                              0xFFCE9760,
+                            ).withOpacity(0.6),
                           ),
-                          child: _isLoading
-                              ? const SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.black,
-                                    strokeWidth: 2,
+                          child:
+                              _isLoading
+                                  ? const SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.black,
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                  : const Text(
+                                    'Register',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
                                   ),
-                                )
-                              : const Text(
-                                  'Register',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
                         ),
                       ),
                       const SizedBox(height: 30),
@@ -382,7 +389,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Row(
                         children: [
                           const Expanded(
-                              child: Divider(color: Color(0xFFCE9760))),
+                            child: Divider(color: Color(0xFFCE9760)),
+                          ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Text(
@@ -391,7 +399,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           const Expanded(
-                              child: Divider(color: Color(0xFFCE9760))),
+                            child: Divider(color: Color(0xFFCE9760)),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 30),
@@ -401,17 +410,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         children: [
                           _socialLoginButton(
                             'assets/images/facebook.png',
-                            onTap: () {
-                            },
+                            onTap: () {},
                           ),
                           _socialLoginButton(
                             'assets/images/google.png',
-                          onTap: _handleGoogleSignIn,
+                            onTap: _handleGoogleSignIn,
                           ),
                           _socialLoginButton(
                             'assets/images/twitter.png',
-                            onTap: () {
-                            },
+                            onTap: () {},
                           ),
                         ],
                       ),
@@ -425,8 +432,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             style: TextStyle(color: Colors.white),
                           ),
                           TextButton(
-                            onPressed: () =>
-                                Navigator.pushReplacementNamed(context, '/login'),
+                            onPressed:
+                                () => Navigator.pushReplacementNamed(
+                                  context,
+                                  '/login',
+                                ),
                             child: const Text(
                               'Login',
                               style: TextStyle(

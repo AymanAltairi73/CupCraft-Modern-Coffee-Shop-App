@@ -47,7 +47,7 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(widget.coffee.image),
-          fit: BoxFit.cover,
+          //fit: BoxFit.values[2],
         ),
       ),
     );
