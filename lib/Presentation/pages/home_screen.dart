@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:math'; // Import dart:math for min function
 
@@ -5,7 +6,6 @@ import 'coffee_details_screen.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
 import '../../core/utility/navigation_helper.dart';
 import '../../data/model/Coffee.dart';
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -42,14 +42,14 @@ class _HomeScreenState extends State<HomeScreen> {
       image: 'assets/images/liberica.png',
       description: 'Lorem ipsum dolor sit amet cons',
     ),
-     // Add more coffee items if needed for testing different counts
+    // Add more coffee items if needed for testing different counts
     Coffee(
       name: 'Espresso',
       price: 10,
-      image: 'assets/images/arabica.png', // Replace with actual image if available
+      image:
+          'assets/images/arabica.png', // Replace with actual image if available
       description: 'Strong and concentrated',
     ),
-    
   ];
 
   // This list will hold the coffees currently displayed based on the category
@@ -57,10 +57,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<String> _categories = [
     'Hot Coffees', // Index 0
-    'Ice Teas',    // Index 1
-    'Hot Teas',    // Index 2
-    'Drinks',      // Index 3
-    'Bakery',      // Index 4
+    'Ice Teas', // Index 1
+    'Hot Teas', // Index 2
+    'Drinks', // Index 3
+    'Bakery', // Index 4
   ];
 
   int _selectedCategory = 0;
@@ -80,16 +80,20 @@ class _HomeScreenState extends State<HomeScreen> {
           _displayedCoffeeList = List.from(_allCoffees); // Create a copy
           break;
         case 1: // Ice Teas - Show first 3 (or fewer if not enough)
-          _displayedCoffeeList = _allCoffees.take(min(3, _allCoffees.length)).toList();
+          _displayedCoffeeList =
+              _allCoffees.take(min(3, _allCoffees.length)).toList();
           break;
         case 2: // Hot Teas - Show first 2 (or fewer if not enough)
-          _displayedCoffeeList = _allCoffees.take(min(2, _allCoffees.length)).toList();
+          _displayedCoffeeList =
+              _allCoffees.take(min(2, _allCoffees.length)).toList();
           break;
         case 3: // Drinks - Show first 1 (or fewer if not enough)
-          _displayedCoffeeList = _allCoffees.take(min(1, _allCoffees.length)).toList();
+          _displayedCoffeeList =
+              _allCoffees.take(min(1, _allCoffees.length)).toList();
           break;
         case 4: // Bakery - Show none from this list (or implement specific bakery logic later)
-          _displayedCoffeeList = _allCoffees.take(min(2, _allCoffees.length)).toList();
+          _displayedCoffeeList =
+              _allCoffees.take(min(2, _allCoffees.length)).toList();
           //_displayedCoffeeList = [];
           break;
         default: // Default case, show all
@@ -98,17 +102,16 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-
   // This function updates the original _allCoffees list
   void updateFavoriteStatus(Coffee coffee) {
-     final index = _allCoffees.indexWhere((c) => c.name == coffee.name);
-     if (index != -1) {
-       setState(() {
-         _allCoffees[index].isFavorite = !_allCoffees[index].isFavorite;
-         // No need to call _updateDisplayedCoffees here unless the filtering logic
-         // depends on the favorite status itself. The GridView item will rebuild.
-       });
-     }
+    final index = _allCoffees.indexWhere((c) => c.name == coffee.name);
+    if (index != -1) {
+      setState(() {
+        _allCoffees[index].isFavorite = !_allCoffees[index].isFavorite;
+        // No need to call _updateDisplayedCoffees here unless the filtering logic
+        // depends on the favorite status itself. The GridView item will rebuild.
+      });
+    }
   }
 
   // This function updates the original _allCoffees list
@@ -118,13 +121,14 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         if (isSelected != null) _allCoffees[index].isSelected = isSelected;
         if (quantity != null) _allCoffees[index].quantity = quantity;
-         // No need to call _updateDisplayedCoffees here.
+        // No need to call _updateDisplayedCoffees here.
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+ 
     return Scaffold(
       backgroundColor: Color(0xFF543A20),
       body: SafeArea(
@@ -154,13 +158,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildHeader() {
-    // ... (Keep your existing _buildHeader code)
+   Widget _buildHeader() {
+    final user = FirebaseAuth.instance.currentUser;
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Row(
         children: [
-         GestureDetector(
+          GestureDetector(
             onTap: () => NavigationHelper.navigateToPage(context, 3, replace: false),
             child: const CircleAvatar(
               radius: 25,
@@ -171,16 +175,16 @@ class _HomeScreenState extends State<HomeScreen> {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
-                  'Ayman Altairi',
-                  style: TextStyle(
+                  'Hello, ${user?.displayName ?? 'Guest'}!',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(
+                const Text(
                   'Good Morning!',
                   style: TextStyle(color: Colors.white70, fontSize: 14),
                 ),
@@ -191,12 +195,18 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(Icons.search, color: Colors.white, size: 25),
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Center(child: Text('Search coming soon!'))),
+                const SnackBar(
+                  content: Center(child: Text('Search coming soon!')),
+                ),
               );
             },
           ),
           IconButton(
-            icon: const Icon(Icons.notifications_none, color: Colors.white, size: 25),
+            icon: const Icon(
+              Icons.notifications_none,
+              color: Colors.white,
+              size: 25,
+            ),
             onPressed: () => NavigationHelper.goToNotifications(context),
           ),
         ],
@@ -206,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildPromoBanner() {
     // ... (Keep your existing _buildPromoBanner code)
-     return Container(
+    return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -320,26 +330,27 @@ class _HomeScreenState extends State<HomeScreen> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CoffeeDetailsScreen(
-                  coffee: coffee, // Pass the specific coffee
-                  onFavoriteChanged: (updatedCoffee) {
-                    // Find the coffee in the *original* list and update it
-                    final originalIndex = _allCoffees.indexWhere(
-                      (c) => c.name == updatedCoffee.name,
-                    );
-                    if (originalIndex != -1) {
-                      setState(() {
-                        _allCoffees[originalIndex].isFavorite =
-                            updatedCoffee.isFavorite;
-                        // Optional: If the displayed list should immediately reflect
-                        // this change (e.g., if filtering by favorites), call:
-                        // _updateDisplayedCoffees();
-                      });
-                    }
-                  },
-                  // Pass the updateCartStatus function which modifies the original list
-                  onCartChanged: updateCartStatus,
-                ),
+                builder:
+                    (context) => CoffeeDetailsScreen(
+                      coffee: coffee, // Pass the specific coffee
+                      onFavoriteChanged: (updatedCoffee) {
+                        // Find the coffee in the *original* list and update it
+                        final originalIndex = _allCoffees.indexWhere(
+                          (c) => c.name == updatedCoffee.name,
+                        );
+                        if (originalIndex != -1) {
+                          setState(() {
+                            _allCoffees[originalIndex].isFavorite =
+                                updatedCoffee.isFavorite;
+                            // Optional: If the displayed list should immediately reflect
+                            // this change (e.g., if filtering by favorites), call:
+                            // _updateDisplayedCoffees();
+                          });
+                        }
+                      },
+                      // Pass the updateCartStatus function which modifies the original list
+                      onCartChanged: updateCartStatus,
+                    ),
               ),
             );
           },
@@ -355,13 +366,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded( // Use Expanded to allow image to take available space
+                      Expanded(
+                        // Use Expanded to allow image to take available space
                         child: Center(
                           child: Image.asset(
                             coffee.image,
                             // height: 100, // Let Expanded handle height
                             // width: 100, // Let Expanded handle width
-                            fit: BoxFit.contain, // Use contain to avoid distortion
+                            fit:
+                                BoxFit
+                                    .contain, // Use contain to avoid distortion
                           ),
                         ),
                       ),
@@ -369,7 +383,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Flexible( // Wrap text to prevent overflow
+                          Flexible(
+                            // Wrap text to prevent overflow
                             child: Text(
                               coffee.name,
                               style: const TextStyle(
@@ -377,7 +392,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
-                              overflow: TextOverflow.ellipsis, // Handle long names
+                              overflow:
+                                  TextOverflow.ellipsis, // Handle long names
                             ),
                           ),
                           Text(
@@ -397,8 +413,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Color(0xFF543A20),
                           fontSize: 13,
                         ),
-                         maxLines: 1, // Limit description lines
-                         overflow: TextOverflow.ellipsis,
+                        maxLines: 1, // Limit description lines
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),

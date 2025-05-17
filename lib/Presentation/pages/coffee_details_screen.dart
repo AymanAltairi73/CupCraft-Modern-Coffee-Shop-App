@@ -43,10 +43,14 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
 
   Widget _buildBackgroundImage() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.4,
+      
+      height: MediaQuery.of(context).size.height * 0.5,
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(widget.coffee.image),
+          fit: BoxFit.none,
+          
           //fit: BoxFit.values[2],
         ),
       ),
@@ -72,7 +76,7 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
- IconButton(
+            IconButton(
               icon: Icon(
                 widget.coffee.isFavorite
                     ? Icons.favorite
@@ -102,10 +106,7 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
           decoration: BoxDecoration(
             color: const Color(0xFF543A20),
             borderRadius: BorderRadius.vertical(
-              top: Radius.elliptical(
-                MediaQuery.of(context).size.width,
-                70,
-              ),
+              top: Radius.elliptical(MediaQuery.of(context).size.width, 70),
             ),
           ),
           child: SingleChildScrollView(
@@ -161,7 +162,7 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
               fontWeight: FontWeight.bold,
             ),
           ),
-        )
+        ),
       ],
     );
   }
@@ -336,13 +337,16 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
               // Add to cart logic here
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Center(child: Text('Added to cart successfully!',
-                  style: TextStyle(
-                    color: Color(0xFF543A20),
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                  content: Center(
+                    child: Text(
+                      'Added to cart successfully!',
+                      style: TextStyle(
+                        color: Color(0xFF543A20),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                   )),
                   backgroundColor: Color(0xFFCE9760),
                 ),
               );

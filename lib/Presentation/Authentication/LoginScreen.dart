@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:developer' as developer;
 
 import 'authService.dart';
 
@@ -18,6 +20,41 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
   bool _isLoading = false;
+  bool _rememberMe = false;
+
+  // Keys for SharedPreferences
+  static const String _savedEmailKey = 'saved_email';
+  static const String _savedPasswordKey = 'saved_password';
+  static const String _rememberMeKey = 'remember_me';
+
+  @override
+  void initState() {
+    super.initState();
+    // Load saved credentials if they exist
+    _loadSavedCredentials();
+  }
+
+  // WARNING: Storing passwords locally is not secure for production
+  // This should only be used during development or with proper encryption
+  Future<void> _loadSavedCredentials() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final savedEmail = prefs.getString(_savedEmailKey);
+      final savedPassword = prefs.getString(_savedPasswordKey);
+      final rememberMeValue = prefs.getBool(_rememberMeKey);
+
+      if (savedEmail != null && savedPassword != null && rememberMeValue == true) {
+        setState(() {
+          _emailController.text = savedEmail;
+          _passwordController.text = savedPassword;
+          _rememberMe = true;
+        });
+        developer.log('Loaded saved credentials for development convenience', name: 'LoginScreen');
+      }
+    } catch (e) {
+      developer.log('Error loading saved credentials: $e', name: 'LoginScreen');
+    }
+  }
 
   @override
   void dispose() {
@@ -51,6 +88,29 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  // WARNING: Storing passwords locally is not secure for production
+  // This should only be used during development or with proper encryption
+  Future<void> _saveCredentials() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (_rememberMe) {
+        // Save credentials only if "Remember Me" is checked
+        await prefs.setString(_savedEmailKey, _emailController.text.trim());
+        await prefs.setString(_savedPasswordKey, _passwordController.text.trim());
+        await prefs.setBool(_rememberMeKey, true);
+        developer.log('Credentials saved for development convenience', name: 'LoginScreen');
+      } else {
+        // Clear saved credentials if "Remember Me" is unchecked
+        await prefs.remove(_savedEmailKey);
+        await prefs.remove(_savedPasswordKey);
+        await prefs.remove(_rememberMeKey);
+        developer.log('Credentials cleared', name: 'LoginScreen');
+      }
+    } catch (e) {
+      developer.log('Error saving credentials: $e', name: 'LoginScreen');
+    }
+  }
+
   Future<void> _signIn() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -64,11 +124,17 @@ class _LoginScreenState extends State<LoginScreen> {
             password: _passwordController.text.trim(),
           );
 
-      if (userCredential.user != null && mounted) {
-        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+      if (userCredential.user != null) {
+        // Save credentials if "Remember Me" is checked
+        await _saveCredentials();
+
+        // Navigate to home screen if still mounted
+        if (mounted) {
+          Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+        }
       }
     } on FirebaseAuthException catch (e) {
-      print("Firebase Auth Error: ${e.code} - ${e.message}"); // For debugging
+      developer.log("Firebase Auth Error: ${e.code} - ${e.message}", name: 'LoginScreen');
       Get.snackbar(
         'Error',
         _getErrorMessage(e.code),
@@ -80,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
         borderRadius: 8,
       );
     } catch (e) {
-      print("Unexpected Error: $e"); // For debugging
+      developer.log("Unexpected Error: $e", name: 'LoginScreen');
       Get.snackbar(
         'Error',
         'An unexpected error occurred. Please try again',
@@ -138,87 +204,6 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     }
   }
-
-  // Future<void> _signIn() async {
-  //   if (!_formKey.currentState!.validate()) return;
-
-  //   try {
-  //     setState(() => _isLoading = true);
-
-  //     // Sign in user
-  //     UserCredential userCredential = await FirebaseAuth.instance
-  //         .signInWithEmailAndPassword(
-  //           email: _emailController.text.trim(),
-  //           password: _passwordController.text.trim(),
-  //         );
-
-  //     // Print user info for verification
-  //     print("Logged in user: ${userCredential.user?.email}");
-
-  //     // Navigate to home screen
-  //     if (mounted) {
-  //       Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
-  //     }
-  //   } on FirebaseAuthException catch (e) {
-  //     print("Firebase Auth Error: ${e.code} - ${e.message}"); // For debugging
-  //     Get.snackbar(
-  //       'Error',
-  //       _getErrorMessage(e.code),
-  //       snackPosition: SnackPosition.BOTTOM,
-  //       backgroundColor: Colors.red,
-  //       colorText: Colors.white,
-  //       duration: const Duration(seconds: 3),
-  //       margin: const EdgeInsets.all(8),
-  //       borderRadius: 8,
-  //     );
-  //   } catch (e) {
-  //     print("Unexpected Error: $e"); // For debugging
-  //     Get.snackbar(
-  //       'Error',
-  //       'An unexpected error occurred',
-  //       snackPosition: SnackPosition.BOTTOM,
-  //       backgroundColor: Colors.red,
-  //       colorText: Colors.white,
-  //     );
-  //   } finally {
-  //     if (mounted) setState(() => _isLoading = false);
-  //   }
-  // }
-
-  // Future<void> _resetPassword() async {
-  //   if (_emailController.text.isEmpty) {
-  //     Get.snackbar(
-  //       'Error',
-  //       'Please enter your email address first',
-  //       snackPosition: SnackPosition.BOTTOM,
-  //       backgroundColor: Colors.red,
-  //       colorText: Colors.white,
-  //     );
-  //     return;
-  //   }
-
-  //   try {
-  //     await FirebaseAuth.instance.sendPasswordResetEmail(
-  //       email: _emailController.text.trim(),
-  //     );
-  //     Get.snackbar(
-  //       'Success',
-  //       'Password reset email sent. Please check your inbox',
-  //       snackPosition: SnackPosition.BOTTOM,
-  //       backgroundColor: Colors.green,
-  //       colorText: Colors.white,
-  //     );
-  //   } on FirebaseAuthException catch (e) {
-  //     Get.snackbar(
-  //       'Error',
-  //       _getErrorMessage(e.code),
-  //       snackPosition: SnackPosition.BOTTOM,
-  //       backgroundColor: Colors.red,
-  //       colorText: Colors.white,
-  //     );
-  //   }
-  // }
-
   Future<void> _handleGoogleSignIn() async {
     try {
       setState(() => _isLoading = true);
@@ -226,24 +211,26 @@ class _LoginScreenState extends State<LoginScreen> {
       final UserCredential? userCredential =
           await _authService.signInWithGoogle();
 
-      if (userCredential != null && mounted) {
-        // Show success message
-        Get.snackbar(
-          'Success',
-          'Successfully signed in with Google',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-          duration: const Duration(seconds: 2),
-          margin: const EdgeInsets.all(8),
-          borderRadius: 8,
-        );
+      if (userCredential != null) {
+        if (mounted) {
+          // Show success message
+          Get.snackbar(
+            'Success',
+            'Successfully signed in with Google',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+            duration: const Duration(seconds: 2),
+            margin: const EdgeInsets.all(8),
+            borderRadius: 8,
+          );
 
-        // Navigate to home screen
-        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+          // Navigate to home screen
+          Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+        }
       }
     } catch (e) {
-      print("Google Sign In Error in LoginScreen: $e");
+      developer.log("Google Sign In Error in LoginScreen: $e", name: 'LoginScreen');
       Get.snackbar(
         'Error',
         'Failed to sign in with Google. Please try again.',
@@ -272,7 +259,7 @@ class _LoginScreenState extends State<LoginScreen> {
             height: double.infinity,
           ),
           // Black Overlay
-          Container(color: Colors.black.withOpacity(0.5)),
+          Container(color: Colors.black.withAlpha(128)), // 0.5 * 255 = 128
           // Main Content
           SafeArea(
             child: SingleChildScrollView(
@@ -395,20 +382,61 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                     ),
-                    // Forgot Password
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: _resetPassword,
-                        child: const Text(
-                          'Forgot Password?',
-                          style: TextStyle(
-                            color: Color(0xFFCE9760),
-                            fontSize: 14,
+                    // Remember Me and Forgot Password Row
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Remember Me Checkbox
+                        Row(
+                          children: [
+                            Checkbox(
+                              value: _rememberMe,
+                              onChanged: (value) {
+                                setState(() {
+                                  _rememberMe = value ?? false;
+                                });
+                              },
+                              activeColor: const Color(0xFFCE9760),
+                              checkColor: Colors.black,
+                              side: const BorderSide(color: Color(0xFFCE9760)),
+                            ),
+                            const Text(
+                              'Remember Me',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                        // Forgot Password
+                        TextButton(
+                          onPressed: _resetPassword,
+                          child: const Text(
+                            'Forgot Password?',
+                            style: TextStyle(
+                              color: Color(0xFFCE9760),
+                              fontSize: 14,
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
+                    //@Abd-a966#
+                    // Warning about storing credentials
+                    if (_rememberMe)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          'Warning: Storing credentials is not secure for production use.',
+                          style: TextStyle(
+                            color: Colors.amber[700],
+                            fontSize: 12,
+                            fontStyle: FontStyle.italic,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
                     const SizedBox(height: 24),
                     // Sign in Button
                     SizedBox(
@@ -423,7 +451,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           disabledBackgroundColor: const Color(
                             0xFFCE9760,
-                          ).withOpacity(0.6),
+                          ).withAlpha(153), // 0.6 * 255 = 153
                         ),
                         child:
                             _isLoading
@@ -525,7 +553,7 @@ class _LoginScreenState extends State<LoginScreen> {
         width: 65,
         height: 65,
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.7),
+          color: Colors.black.withAlpha(179), // 0.7 * 255 = 179
           borderRadius: BorderRadius.circular(12),
         ),
         child: Center(

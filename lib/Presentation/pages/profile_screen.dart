@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -9,6 +10,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+    final fullName = user?.displayName ?? 'Guest';
     return WillPopScope(
       onWillPop: () async {
         NavigationHelper.navigateToPage(context, 0);
@@ -62,9 +65,9 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget _buildProfileHeader() {
+    final user = FirebaseAuth.instance.currentUser;
     return Container(
       padding: const EdgeInsets.all(20),
-
       child: Column(
         children: [
           Stack(
@@ -92,9 +95,9 @@ class ProfileScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 15),
-          const Text(
-            'Ayman Altairi.',
-            style: TextStyle(
+          Text(
+            user?.displayName ?? 'Guest',
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -106,9 +109,6 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  // void _navigateToEditProfile(BuildContext context) {
-  //   Navigator.pushNamed(context, '/edit-profile');
-  // }
 
   Widget _buildMenuItems(BuildContext context) {
     return Container(
