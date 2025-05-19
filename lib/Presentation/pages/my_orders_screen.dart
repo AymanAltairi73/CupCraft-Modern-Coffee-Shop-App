@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../core/utility/navigation_helper.dart';
 
@@ -18,46 +19,47 @@ class MyOrdersScreen extends StatelessWidget {
     return AppBar(
       backgroundColor: const Color(0xFF543A20),
       elevation: 0,
-      toolbarHeight: 100,
-      shape: const RoundedRectangleBorder(
+      toolbarHeight: 100.h,
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
+          bottomLeft: Radius.circular(20.r),
+          bottomRight: Radius.circular(20.r),
         ),
       ),
       leading: Padding(
-        padding: const EdgeInsets.only(left: 10),
+        padding: EdgeInsets.only(left: 10.w),
         child: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFFCE9760)),
+          icon: Icon(Icons.arrow_back_ios, color: const Color(0xFFCE9760), size: 24.r),
           onPressed: () => NavigationHelper.goBack(context),
+          iconSize: 24.r,
+          padding: EdgeInsets.all(8.r),
+          constraints: BoxConstraints(minWidth: 44.r, minHeight: 44.r),
         ),
       ),
-      title: const Text(
+      title: Text(
         'My Orders',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 22,
+          fontSize: 22.sp,
           fontWeight: FontWeight.bold,
         ),
       ),
-
       centerTitle: true,
     );
   }
     Widget _divider() {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 5),
+      padding: EdgeInsets.only(bottom: 5.h),
       child: Divider(
-        color: const Color(0xFFCE9760).withOpacity(0.3),
-        thickness: 1,
-        //height: 10,
+        color: const Color(0xFFCE9760).withAlpha(77), // 0.3 * 255 = 77
+        thickness: 1.h,
       ),
     );
   }
 
   Widget _buildOrdersList() {
     return ListView(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.r),
       children: [
         _buildOrderItem(
           image: 'assets/images/robusta.png',
@@ -120,15 +122,15 @@ class MyOrdersScreen extends StatelessWidget {
     required bool isInProgress,
   }) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 5),
+      margin: EdgeInsets.only(bottom: 5.h),
       child: Row(
         children: [
           // Product Image
           Container(
-            width: 90,
-            height: 90,
+            width: 90.r,
+            height: 90.r,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(15.r),
               color: const Color(0xFFCE9760),
               image: DecorationImage(
                 image: AssetImage(image),
@@ -136,7 +138,7 @@ class MyOrdersScreen extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 15),
+          SizedBox(width: 15.w),
           // Product Details
           Expanded(
             child: Column(
@@ -144,34 +146,34 @@ class MyOrdersScreen extends StatelessWidget {
               children: [
                 Text(
                   name,
-                  style: const TextStyle(
-                    fontSize: 18,
+                  style: TextStyle(
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,
                   ),
                 ),
-                const SizedBox(height: 5),
+                SizedBox(height: 5.h),
                 Text(
                   'Qty: $quantity',
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: TextStyle(
+                    fontSize: 14.sp,
                     color: Colors.black54,
                   ),
                 ),
-                const SizedBox(height: 5),
+                SizedBox(height: 5.h),
                 Text(
                   '\$$price',
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: TextStyle(
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF543A20),
+                    color: const Color(0xFF543A20),
                   ),
                 ),
-                const SizedBox(height: 5),
+                SizedBox(height: 5.h),
                 Text(
                   status,
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 14.sp,
                     color: isInProgress ? Colors.green : Colors.grey,
                   ),
                 ),
@@ -187,25 +189,28 @@ class MyOrdersScreen extends StatelessWidget {
               }
             },
             style: TextButton.styleFrom(
-              backgroundColor: isInProgress 
+              backgroundColor: isInProgress
                   ? const Color(0xFFCE9760)
                   : Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(20.r),
                 side: BorderSide(
-                  color: isInProgress 
+                  color: isInProgress
                       ? Colors.transparent
                       : const Color(0xFFCE9760),
+                  width: 1.r,
                 ),
               ),
+              minimumSize: Size(80.w, 36.h),
             ),
             child: Text(
               isInProgress ? 'Track' : 'Complete',
               style: TextStyle(
-                color: isInProgress 
+                color: isInProgress
                     ? Colors.white
                     : const Color(0xFFCE9760),
+                fontSize: 14.sp,
               ),
             ),
           ),

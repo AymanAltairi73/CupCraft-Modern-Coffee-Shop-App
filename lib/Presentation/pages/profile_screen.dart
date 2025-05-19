@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../core/utility/navigation_helper.dart';
@@ -10,12 +11,12 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-    final fullName = user?.displayName ?? 'Guest';
-    return WillPopScope(
-      onWillPop: () async {
-        NavigationHelper.navigateToPage(context, 0);
-        return false;
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, dynamic result) {
+        if (!didPop) {
+          NavigationHelper.navigateToPage(context, 0);
+        }
       },
       child: Scaffold(
         backgroundColor: const Color(0xFF543A20),
@@ -30,21 +31,21 @@ class ProfileScreen extends StatelessWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+        icon: Icon(Icons.arrow_back_ios, color: Colors.white, size: 20.r),
         onPressed: () => NavigationHelper.goBack(context),
       ),
-      title: const Text(
+      title: Text(
         'Profile',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 22,
+          fontSize: 22.sp,
           fontWeight: FontWeight.bold,
         ),
       ),
       centerTitle: true,
       actions: [
         IconButton(
-          icon: const Icon(Icons.notifications_none, color: Colors.white, size: 28,),
+          icon: Icon(Icons.notifications_none, color: Colors.white, size: 28.r),
           onPressed: () => Navigator.pushNamed(context, '/notifications'),
         ),
       ],
@@ -55,9 +56,9 @@ class ProfileScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          //const SizedBox(height: 20),
+          //SizedBox(height: 20.h),
           _buildProfileHeader(),
-          const SizedBox(height: 20),
+          SizedBox(height: 20.h),
           _buildMenuItems(context),
         ],
       ),
@@ -67,43 +68,43 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildProfileHeader() {
     final user = FirebaseAuth.instance.currentUser;
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.r),
       child: Column(
         children: [
           Stack(
             children: [
-              const CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage('assets/images/profile.png'),
+              CircleAvatar(
+                radius: 50.r,
+                backgroundImage: const AssetImage('assets/images/profile.png'),
               ),
               Positioned(
                 right: 0,
                 bottom: 0,
                 child: Container(
-                  padding: const EdgeInsets.all(4),
+                  padding: EdgeInsets.all(4.r),
                   decoration: const BoxDecoration(
                     color: Color(0xFFCE9760),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.edit,
                     color: Colors.white,
-                    size: 20,
+                    size: 20.r,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 15),
+          SizedBox(height: 15.h),
           Text(
             user?.displayName ?? 'Guest',
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white,
-              fontSize: 24,
+              fontSize: 24.sp,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 5),
+          SizedBox(height: 5.h),
         ],
       ),
     );
@@ -112,7 +113,7 @@ class ProfileScreen extends StatelessWidget {
 
   Widget _buildMenuItems(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
         children: [
           _buildMenuItem(
@@ -160,27 +161,27 @@ class ProfileScreen extends StatelessWidget {
   }) {
     return ListTile(
       leading: Container(
-        width: 40,
-        height: 40,
+        width: 40.r,
+        height: 40.r,
         decoration: BoxDecoration(
           color: const Color(0xFFCE9760),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(20.r),
         ),
-        child: Icon(icon, color: Colors.white),
+        child: Icon(icon, color: Colors.white, size: 20.r),
       ),
       title: Text(
         title,
         style: TextStyle(
           color: textColor ?? Colors.white,
-          fontSize: 16,
+          fontSize: 16.sp,
           fontWeight: FontWeight.w500,
         ),
       ),
 
-      trailing: const Icon(
+      trailing: Icon(
         Icons.arrow_forward_ios,
-        color: Color(0xFFCE9760),
-        size: 16,
+        color: const Color(0xFFCE9760),
+        size: 16.r,
       ),
       onTap: onTap,
     );
@@ -193,17 +194,23 @@ class ProfileScreen extends StatelessWidget {
           (context) => AlertDialog(
             backgroundColor: const Color(0xFFCE9760),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(10.r),
             ),
             title: Center(
-              child: const Text(
+              child: Text(
                 'Logout',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.sp,
+                ),
               ),
             ),
-            content: const Text(
+            content: Text(
               'Are you sure you want to logout?',
-              style: TextStyle(color: Color(0xFF543A20), fontSize: 15),
+              style: TextStyle(
+                color: const Color(0xFF543A20),
+                fontSize: 15.sp,
+              ),
             ),
             actions: [
               Row(
@@ -211,26 +218,27 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      border: Border.all(color: Color(0xFF543A20), width: 2),
-                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: const Color(0xFF543A20), width: 2.r),
+                      borderRadius: BorderRadius.circular(8.r),
                       color: const Color(0xFF543A20),
                     ),
                     child: TextButton(
                       onPressed: () {
                         Navigator.pop(context);
-                      Navigator.pushNamed(context, '/login');
+                        Navigator.pushNamed(context, '/login');
                       },
                       style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 10,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 30.w,
+                          vertical: 10.h,
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         'Yes',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
+                          fontSize: 14.sp,
                         ),
                       ),
                     ),
@@ -239,23 +247,24 @@ class ProfileScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: const Color(0xFF543A20),
-                        width: 2,
+                        width: 2.r,
                       ),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(8.r),
                     ),
                     child: TextButton(
                       onPressed: () => Navigator.pop(context),
                       style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 10,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 30.w,
+                          vertical: 10.h,
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         'No',
                         style: TextStyle(
-                          color: Color(0xFF543A20),
+                          color: const Color(0xFF543A20),
                           fontWeight: FontWeight.bold,
+                          fontSize: 14.sp,
                         ),
                       ),
                     ),
@@ -274,28 +283,32 @@ class ProfileScreen extends StatelessWidget {
           (context) => AlertDialog(
             backgroundColor: const Color(0xFFCE9760),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(15.r),
             ),
-            title: const Text(
+            title: Text(
               'Share App',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
+                fontSize: 18.sp,
               ),
             ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
+                Text(
                   'Share this app with your friends',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14.sp,
+                  ),
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     _buildShareButton(
-                       icon: FontAwesomeIcons.whatsapp,  // استخدم هذه الأيقو
+                      icon: FontAwesomeIcons.whatsapp,
                       onTap: () => Navigator.pop(context),
                     ),
                     _buildShareButton(
@@ -321,11 +334,12 @@ class ProfileScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF543A20),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.white, width: 1),
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(color: Colors.white, width: 1.r),
       ),
       child: IconButton(
-        icon: Icon(icon, color: Colors.white),
+        icon: Icon(icon, color: Colors.white, size: 22.r),
+        padding: EdgeInsets.all(12.r),
         onPressed: onTap,
       ),
     );

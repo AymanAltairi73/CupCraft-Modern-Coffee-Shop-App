@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:math'; // Import dart:math for min function
 
 import 'coffee_details_screen.dart';
@@ -128,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
- 
+
     return Scaffold(
       backgroundColor: Color(0xFF543A20),
       body: SafeArea(
@@ -161,51 +162,56 @@ class _HomeScreenState extends State<HomeScreen> {
    Widget _buildHeader() {
     final user = FirebaseAuth.instance.currentUser;
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.r),
       child: Row(
         children: [
           GestureDetector(
             onTap: () => NavigationHelper.navigateToPage(context, 3, replace: false),
-            child: const CircleAvatar(
-              radius: 25,
-              backgroundImage: AssetImage('assets/images/profile.png'),
+            child: CircleAvatar(
+              radius: 25.r,
+              backgroundImage: const AssetImage('assets/images/profile.png'),
             ),
           ),
-          const SizedBox(width: 15),
+          SizedBox(width: 15.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Hello, ${user?.displayName ?? 'Guest'}!',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 20.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const Text(
+                Text(
                   'Good Morning!',
-                  style: TextStyle(color: Colors.white70, fontSize: 14),
+                  style: TextStyle(color: Colors.white70, fontSize: 14.sp),
                 ),
               ],
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.search, color: Colors.white, size: 25),
+            icon: Icon(Icons.search, color: Colors.white, size: 25.r),
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Center(child: Text('Search coming soon!')),
+                SnackBar(
+                  content: Center(
+                    child: Text(
+                      'Search coming soon!',
+                      style: TextStyle(fontSize: 14.sp),
+                    ),
+                  ),
                 ),
               );
             },
           ),
           IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.notifications_none,
               color: Colors.white,
-              size: 25,
+              size: 25.r,
             ),
             onPressed: () => NavigationHelper.goToNotifications(context),
           ),
@@ -215,41 +221,40 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildPromoBanner() {
-    // ... (Keep your existing _buildPromoBanner code)
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      padding: const EdgeInsets.all(20),
+      margin: EdgeInsets.symmetric(horizontal: 20.w),
+      padding: EdgeInsets.all(20.r),
       decoration: BoxDecoration(
         color: const Color.fromARGB(255, 165, 111, 79),
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(15.r),
       ),
       child: Row(
         children: [
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
                   'Get 20% Discount',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 20.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   'On your First Order!',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style: TextStyle(color: Colors.white, fontSize: 16.sp),
                 ),
-                SizedBox(height: 5),
+                SizedBox(height: 5.h),
                 Text(
                   'Lorem ipsum dolor sit amet consectetur.\nVestibulum eget blandit mattis',
-                  style: TextStyle(color: Colors.white70, fontSize: 12),
+                  style: TextStyle(color: Colors.white70, fontSize: 12.sp),
                 ),
               ],
             ),
           ),
-          Image.asset('assets/images/coffee_promo.png', width: 100),
+          Image.asset('assets/images/coffee_promo.png', width: 100.w),
         ],
       ),
     );
@@ -257,12 +262,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildCategories() {
     return Container(
-      height: 50,
-      margin: const EdgeInsets.symmetric(vertical: 20),
+      height: 50.h,
+      margin: EdgeInsets.symmetric(vertical: 20.h),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: _categories.length,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
@@ -272,15 +277,15 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             child: Container(
               alignment: Alignment.center,
-              margin: const EdgeInsets.only(right: 15),
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              margin: EdgeInsets.only(right: 15.w),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               decoration: BoxDecoration(
                 color:
                     _selectedCategory == index
                         ? const Color(0xFFCE9760)
                         : Colors.transparent,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Color(0xFFCE9760), width: 1),
+                borderRadius: BorderRadius.circular(20.r),
+                border: Border.all(color: const Color(0xFFCE9760), width: 1.r),
               ),
               child: Text(
                 _categories[index],
@@ -289,7 +294,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       _selectedCategory == index
                           ? Colors.white
                           : const Color(0xFFCE9760),
-                  fontSize: 14,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -304,21 +309,21 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildCoffeeGrid(List<Coffee> coffeesToDisplay) {
     // Handle empty list case
     if (coffeesToDisplay.isEmpty) {
-      return const Center(
+      return Center(
         child: Text(
           'No items available in this category.',
-          style: TextStyle(color: Colors.white70, fontSize: 16),
+          style: TextStyle(color: Colors.white70, fontSize: 16.sp),
         ),
       );
     }
     // Removed the Expanded widget from here, it's now wrapping the call in build()
     return GridView.builder(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 20), // Added bottom padding
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 20.h), // Added bottom padding
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 0.8, // Adjust as needed
-        crossAxisSpacing: 15,
-        mainAxisSpacing: 15,
+        crossAxisSpacing: 15.w,
+        mainAxisSpacing: 15.h,
       ),
       // Use the length of the passed list
       itemCount: coffeesToDisplay.length,
@@ -357,12 +362,12 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Container(
             decoration: BoxDecoration(
               color: const Color(0xFFCE9760),
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(15.r),
             ),
             child: Stack(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(13),
+                  padding: EdgeInsets.all(13.r),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -371,15 +376,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Center(
                           child: Image.asset(
                             coffee.image,
-                            // height: 100, // Let Expanded handle height
-                            // width: 100, // Let Expanded handle width
-                            fit:
-                                BoxFit
-                                    .contain, // Use contain to avoid distortion
+                            // Let Expanded handle height and width
+                            fit: BoxFit.contain, // Use contain to avoid distortion
                           ),
                         ),
                       ),
-                      const SizedBox(height: 5), // Add some space
+                      SizedBox(height: 5.h), // Add some space
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -387,31 +389,30 @@ class _HomeScreenState extends State<HomeScreen> {
                             // Wrap text to prevent overflow
                             child: Text(
                               coffee.name,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 18,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.bold,
                               ),
-                              overflow:
-                                  TextOverflow.ellipsis, // Handle long names
+                              overflow: TextOverflow.ellipsis, // Handle long names
                             ),
                           ),
                           Text(
                             '\$${coffee.price}',
-                            style: const TextStyle(
-                              color: Color(0xFF543A20),
-                              fontSize: 17,
+                            style: TextStyle(
+                              color: const Color(0xFF543A20),
+                              fontSize: 17.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 5),
+                      SizedBox(height: 5.h),
                       Text(
                         coffee.description,
                         style: TextStyle(
-                          color: Color(0xFF543A20),
-                          fontSize: 13,
+                          color: const Color(0xFF543A20),
+                          fontSize: 13.sp,
                         ),
                         maxLines: 1, // Limit description lines
                         overflow: TextOverflow.ellipsis,
@@ -420,8 +421,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Positioned(
-                  top: 10,
-                  right: 10,
+                  top: 10.r,
+                  right: 10.r,
                   child: GestureDetector(
                     onTap: () {
                       // Call the state management function to update the original list
@@ -432,6 +433,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ? Icons.favorite
                           : Icons.favorite_border,
                       color: coffee.isFavorite ? Colors.red : Colors.white,
+                      size: 22.r,
                     ),
                   ),
                 ),

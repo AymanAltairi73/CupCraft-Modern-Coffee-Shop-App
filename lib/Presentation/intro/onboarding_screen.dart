@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -57,35 +58,35 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   // Black Overlay
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.5),
+                      color: Colors.black.withAlpha(128), // 0.5 * 255 = 128
                     ),
                   ),
                   // Title and Description
                   Center(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 300,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 24.w,
+                        vertical: 300.h,
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
                             pages[index]['title']!,
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
-                              fontSize: 45,
+                              fontSize: 45.sp,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Poppins',
                             ),
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 16.h),
                           Text(
                             pages[index]['description']!,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Color(0xFFCE9760),
-                              fontSize: 18,
+                            style: TextStyle(
+                              color: const Color(0xFFCE9760),
+                              fontSize: 18.sp,
                               fontFamily: 'Poppins',
                             ),
                           ),
@@ -100,9 +101,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
           // Top Bar with Skip button and Page Indicator
           Positioned(
-            top: 50,
-            left: 24,
-            right: 24,
+            top: 50.h,
+            left: 24.w,
+            right: 24.w,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -110,12 +111,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 SmoothPageIndicator(
                   controller: _controller,
                   count: pages.length,
-                  effect: const ExpandingDotsEffect(
+                  effect: ExpandingDotsEffect(
                     dotColor: Colors.white30,
-                    activeDotColor: Color(0xFFCE9760),
-                    dotHeight: 8,
-                    dotWidth: 8,
-                    spacing: 8,
+                    activeDotColor: const Color(0xFFCE9760),
+                    dotHeight: 8.r,
+                    dotWidth: 8.r,
+                    spacing: 8.r,
                     expansionFactor: 3,
                   ),
                 ),
@@ -125,20 +126,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   TextButton(
                     onPressed: () => _controller.jumpToPage(pages.length - 1),
                     style: TextButton.styleFrom(
-                      backgroundColor: Colors.white.withOpacity(0.2),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 8,
+                      backgroundColor: Colors.white.withAlpha(51), // 0.2 * 255 = 51
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.w,
+                        vertical: 8.h,
                       ),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(20.r),
                       ),
+                      minimumSize: Size(80.w, 36.h),
                     ),
-                    child: const Text(
+                    child: Text(
                       'Skip',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -150,9 +152,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           // Bottom Buttons
           if (onLastPage)
             Positioned(
-              bottom: 50,
-              left: 24,
-              right: 24,
+              bottom: 50.h,
+              left: 24.w,
+              right: 24.w,
               child: Column(
                 children: [
                   SizedBox(
@@ -163,22 +165,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFFCE9760),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        padding: EdgeInsets.symmetric(vertical: 16.h),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(12.r),
                         ),
+                        minimumSize: Size(double.infinity, 50.h),
                       ),
-                      child: const Text(
+                      child: Text(
                         'Register',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF543A20),
+                          color: const Color(0xFF543A20),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8.h),
                   SizedBox(
                     width: double.infinity,
                     child: TextButton(
@@ -186,21 +189,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Navigator.pushReplacementNamed(context, '/login');
                       },
                       style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        padding: EdgeInsets.symmetric(vertical: 16.h),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          side: const BorderSide(
-                            color: Color(0xFFCE9760),
-                            width: 2,
+                          borderRadius: BorderRadius.circular(12.r),
+                          side: BorderSide(
+                            color: const Color(0xFFCE9760),
+                            width: 2.r,
                           ),
                         ),
+                        minimumSize: Size(double.infinity, 50.h),
                       ),
-                      child: const Text(
+                      child: Text(
                         'Sign In',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFFCE9760),
+                          color: const Color(0xFFCE9760),
                         ),
                       ),
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/model/Coffee.dart';
@@ -24,67 +25,71 @@ class CheckoutScreen extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+              icon: Icon(Icons.arrow_back_ios, color: Colors.white, size: 24.r),
               onPressed: () => Navigator.pop(context),
+              iconSize: 24.r,
+              padding: EdgeInsets.all(8.r),
+              constraints: BoxConstraints(minWidth: 44.r, minHeight: 44.r),
             ),
-            title: const Text(
+            title: Text(
               'Checkout',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 22,
+                fontSize: 22.sp,
                 fontWeight: FontWeight.w600,
               ),
             ),
             centerTitle: true,
           ),
           body: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.all(20.r),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Deliver Address',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 20.sp,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 _buildAddressCard(),
-                const SizedBox(height: 20),
-                const Text(
+                SizedBox(height: 10.h),
+                Text(
                   'Add Payment Method',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 20.sp,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 _buildPaymentCard(context),
-                const SizedBox(height: 20),
+                SizedBox(height: 10.h),
+                _buildStripePaymentCard(context),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
+                    Text(
                       'Product List',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 20.sp,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     Text(
                       '${cartProvider.items.length} items',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white70,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 Expanded(child: _buildProductList(cartProvider)),
                 _buildOrderSummary(cartProvider),
                 _buildContinueButton(context, cartProvider),
@@ -97,31 +102,26 @@ class CheckoutScreen extends StatelessWidget {
   }
   Widget _buildAddressCard() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      // decoration: BoxDecoration(
-      //   color: const Color(0xFFCE9760),
-      //   borderRadius: BorderRadius.circular(12),
-      // ),
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
       child: Row(
         children: [
           Container(
-            //padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: const Color(0xFF543A20),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r),
             ),
             child: CircleAvatar(
-              backgroundColor: Color(0xFFCE9760),
-              radius: 24,
-              child: const Icon(
+              backgroundColor: const Color(0xFFCE9760),
+              radius: 24.r,
+              child: Icon(
                 Icons.location_on_outlined,
-                color: Color(0xFF543A20),
-                size: 30,
+                color: const Color(0xFF543A20),
+                size: 30.r,
               ),
             ),
           ),
-          const SizedBox(width: 12),
-          const Expanded(
+          SizedBox(width: 12.w),
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -129,13 +129,16 @@ class CheckoutScreen extends StatelessWidget {
                   'Home',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 20.sp,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
                   '1910, Wien stodt, At',
-                  style: TextStyle(color: Colors.white70, fontSize: 15),
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 15.sp,
+                  ),
                 ),
               ],
             ),
@@ -144,17 +147,18 @@ class CheckoutScreen extends StatelessWidget {
             onPressed: () {},
             style: TextButton.styleFrom(
               backgroundColor: const Color(0xFFCE9760),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 2.h),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.circular(18.r),
               ),
+              minimumSize: Size(80.w, 30.h),
             ),
-            child: const Text(
+            child: Text(
               'Change',
               style: TextStyle(
-                color: Color(0xFF543A20),
+                color: const Color(0xFF543A20),
                 fontWeight: FontWeight.w600,
-                fontSize: 13,
+                fontSize: 13.sp,
               ),
             ),
           ),
@@ -165,41 +169,39 @@ class CheckoutScreen extends StatelessWidget {
 
   Widget _buildPaymentCard(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-      // decoration: BoxDecoration(
-      //   color: const Color(0xFFCE9760),
-      //   borderRadius: BorderRadius.circular(12),
-      // ),
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 12.h),
       child: Row(
         children: [
           Container(
-            //padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: const Color(0xFF543A20),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r),
             ),
             child: CircleAvatar(
-              backgroundColor: Color(0xFFCE9760),
-              radius: 24,
-              child: const Icon(Icons.add, color: Color(0xFF543A20), size: 30),
+              backgroundColor: const Color(0xFFCE9760),
+              radius: 24.r,
+              child: Icon(Icons.add, color: const Color(0xFF543A20), size: 30.r),
             ),
           ),
-          const SizedBox(width: 12),
-          const Expanded(
+          SizedBox(width: 12.w),
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Add Card',
+                  'Add Master Card',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
                   'Credit or debit',
-                  style: TextStyle(color: Colors.white70, fontSize: 14),
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 14.sp,
+                  ),
                 ),
               ],
             ),
@@ -210,17 +212,82 @@ class CheckoutScreen extends StatelessWidget {
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFFCE9760),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 2.h),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.circular(18.r),
               ),
+              minimumSize: Size(60.w, 30.h),
             ),
-            child: const Text(
+            child: Text(
               'Add',
               style: TextStyle(
-                color: Color(0xFF543A20),
+                color: const Color(0xFF543A20),
                 fontWeight: FontWeight.w600,
-                fontSize: 13,
+                fontSize: 13.sp,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  Widget _buildStripePaymentCard(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 12.h),
+      child: Row(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: const Color(0xFF543A20),
+              borderRadius: BorderRadius.circular(8.r),
+            ),
+            child: CircleAvatar(
+              backgroundColor: const Color(0xFFCE9760),
+              radius: 24.r,
+              child: Icon(Icons.add, color: const Color(0xFF543A20), size: 30.r),
+            ),
+          ),
+          SizedBox(width: 12.w),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Add Paypal Card',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  'Credit or debit',
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 14.sp,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+               //Navigator.pushNamed(context, '/add_payment_card');
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFFCE9760),
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 2.h),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.r),
+              ),
+              minimumSize: Size(60.w, 30.h),
+            ),
+            child: Text(
+              'Add',
+              style: TextStyle(
+                color: const Color(0xFF543A20),
+                fontWeight: FontWeight.w600,
+                fontSize: 13.sp,
               ),
             ),
           ),
@@ -236,15 +303,15 @@ class CheckoutScreen extends StatelessWidget {
           children: [
             Icon(
               Icons.shopping_cart_outlined,
-              size: 64,
-              color: Colors.white.withOpacity(0.5),
+              size: 64.r,
+              color: Colors.white.withAlpha(128), // 0.5 * 255 = 128
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Text(
               'No items in cart',
               style: TextStyle(
-                color: Colors.white.withOpacity(0.5),
-                fontSize: 18,
+                color: Colors.white.withAlpha(128), // 0.5 * 255 = 128
+                fontSize: 18.sp,
               ),
             ),
           ],
@@ -256,64 +323,64 @@ class CheckoutScreen extends StatelessWidget {
       itemCount: cartProvider.items.length,
       separatorBuilder:
           (context, index) =>
-              const Divider(color: Color(0xFFCE9760), height: 2),
+              Divider(color: const Color(0xFFCE9760), height: 2.h),
       itemBuilder: (context, index) {
         final item = cartProvider.items[index];
         return Container(
-          margin: const EdgeInsets.only(bottom: 12),
-          padding: const EdgeInsets.all(12),
+          margin: EdgeInsets.only(bottom: 12.h),
+          padding: EdgeInsets.all(12.r),
           decoration: BoxDecoration(
-            color: const Color(0xFFCE9760).withOpacity(0.3),
-            borderRadius: BorderRadius.circular(12),
+            color: const Color(0xFFCE9760).withAlpha(77), // 0.3 * 255 = 77
+            borderRadius: BorderRadius.circular(12.r),
           ),
           child: Row(
             children: [
               Container(
-                width: 100,
-                height: 100,
+                width: 100.r,
+                height: 100.r,
                 decoration: BoxDecoration(
                   color: const Color(0xFFCE9760),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12.r),
                   image: DecorationImage(
                     image: AssetImage(item.coffee.image),
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
-              const SizedBox(width: 20),
+              SizedBox(width: 20.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       item.coffee.name,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     Text(
                       'Size: ${item.additionalNote ?? "Regular"}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white70,
-                        fontSize: 14,
+                        fontSize: 14.sp,
                       ),
                     ),
                     Text(
                       'Quantity: ${item.quantity}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white70,
-                        fontSize: 14,
+                        fontSize: 14.sp,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     Text(
                       '\$${(item.coffee.price * item.quantity).toStringAsFixed(2)}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -329,11 +396,11 @@ class CheckoutScreen extends StatelessWidget {
 
   Widget _buildOrderSummary(CartProvider cartProvider) {
     return Container(
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.symmetric(vertical: 20),
+      padding: EdgeInsets.all(16.r),
+      margin: EdgeInsets.symmetric(vertical: 20.h),
       decoration: BoxDecoration(
-        color: const Color(0xFFCE9760).withOpacity(0.3),
-        borderRadius: BorderRadius.circular(12),
+        color: const Color(0xFFCE9760).withAlpha(77), // 0.3 * 255 = 77
+        borderRadius: BorderRadius.circular(12.r),
       ),
       child: Column(
         children: [
@@ -341,12 +408,12 @@ class CheckoutScreen extends StatelessWidget {
             'Subtotal',
             '\$${cartProvider.subtotal.toStringAsFixed(2)}',
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           _buildSummaryRow(
             'Shipping',
             '\$${cartProvider.shipping.toStringAsFixed(2)}',
           ),
-          const Divider(color: Colors.white30, height: 20),
+          Divider(color: Colors.white30, height: 20.h),
           _buildSummaryRow(
             'Total',
             '\$${cartProvider.total.toStringAsFixed(2)}',
@@ -362,13 +429,13 @@ class CheckoutScreen extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(color: Colors.white70, fontSize: 16),
+          style: TextStyle(color: Colors.white70, fontSize: 16.sp),
         ),
         Text(
           value,
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.white,
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -389,17 +456,18 @@ class CheckoutScreen extends StatelessWidget {
                 },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFFCE9760),
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: EdgeInsets.symmetric(vertical: 16.h),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12.r),
           ),
-          disabledBackgroundColor: const Color(0xFFCE9760).withOpacity(0.3),
+          disabledBackgroundColor: const Color(0xFFCE9760).withAlpha(77), // 0.3 * 255 = 77
+          minimumSize: Size(double.infinity, 50.h),
         ),
-        child: const Text(
+        child: Text(
           'Continue Payment',
           style: TextStyle(
-            color: Color(0xFF543A20),
-            fontSize: 18,
+            color: const Color(0xFF543A20),
+            fontSize: 18.sp,
             fontWeight: FontWeight.bold,
           ),
         ),

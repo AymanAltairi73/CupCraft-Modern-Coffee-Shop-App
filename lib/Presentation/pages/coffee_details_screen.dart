@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../data/model/CartItem.dart';
 import '../../data/model/Coffee.dart';
@@ -43,15 +44,12 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
 
   Widget _buildBackgroundImage() {
     return Container(
-      
-      height: MediaQuery.of(context).size.height * 0.5,
-      width: MediaQuery.of(context).size.width,
+      height: 0.5.sh, // 50% of screen height using ScreenUtil
+      width: 1.sw, // 100% of screen width using ScreenUtil
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(widget.coffee.image),
           fit: BoxFit.none,
-          
-          //fit: BoxFit.values[2],
         ),
       ),
     );
@@ -60,19 +58,22 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
   Widget _buildCustomAppBar() {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
-              icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+              icon: Icon(Icons.arrow_back_ios, color: Colors.white, size: 24.r),
               onPressed: () => Navigator.pop(context),
+              iconSize: 24.r,
+              padding: EdgeInsets.all(8.r),
+              constraints: BoxConstraints(minWidth: 44.r, minHeight: 44.r),
             ),
             Text(
               widget.coffee.name,
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
-                fontSize: 20,
+                fontSize: 20.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -82,6 +83,7 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
                     ? Icons.favorite
                     : Icons.favorite_border,
                 color: widget.coffee.isFavorite ? Colors.red : Colors.white,
+                size: 24.r,
               ),
               onPressed: () {
                 setState(() {
@@ -89,6 +91,9 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
                   widget.onFavoriteChanged(widget.coffee);
                 });
               },
+              iconSize: 24.r,
+              padding: EdgeInsets.all(8.r),
+              constraints: BoxConstraints(minWidth: 44.r, minHeight: 44.r),
             ),
           ],
         ),
@@ -106,22 +111,22 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
           decoration: BoxDecoration(
             color: const Color(0xFF543A20),
             borderRadius: BorderRadius.vertical(
-              top: Radius.elliptical(MediaQuery.of(context).size.width, 70),
+              top: Radius.elliptical(1.sw, 70.h),
             ),
           ),
           child: SingleChildScrollView(
             controller: scrollController,
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.all(20.r),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildIngredients(),
-                  const SizedBox(height: 30),
+                  SizedBox(height: 30.h),
                   _buildCoffeeSize(),
-                  const SizedBox(height: 30),
+                  SizedBox(height: 30.h),
                   _buildQuantitySelector(),
-                  const SizedBox(height: 30),
+                  SizedBox(height: 30.h),
                   _buildAddToCartButton(),
                 ],
               ),
@@ -137,28 +142,27 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Center(
-          child: const Text(
+          child: Text(
             'Ingredients',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 24,
+              fontSize: 24.sp,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
-        const SizedBox(height: 20),
+        SizedBox(height: 20.h),
         Image.asset(
           'assets/images/arrow2.png',
-          // width: 10,
-          // height: 19,
-          //color: const Color(0xFFCE9760),
+          width: 0.5.sw, // 50% of screen width
+          fit: BoxFit.fitWidth,
         ),
         Center(
-          child: const Text(
+          child: Text(
             'Milk',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 24,
+              fontSize: 24.sp,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -172,86 +176,73 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Center(
-          child: const Text(
+          child: Text(
             'Coffee Size',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 24,
+              fontSize: 24.sp,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
-        const SizedBox(height: 20),
+        SizedBox(height: 20.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children:
-              ['Small', 'Medium', 'Large'].map((size) {
-                final isSelected = _selectedSize == size;
-                return GestureDetector(
-                  onTap: () => setState(() => _selectedSize = size),
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFCE9760),
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color: const Color(0xFFCE9760),
-                        width: 5,
-                      ),
-                    ),
-                    child: Image.asset(
-                      size == 'Small'
-                          ? 'assets/images/small.png'
-                          : size == 'Medium'
+          children: ['Small', 'Medium', 'Large'].map((size) {
+            final isSelected = _selectedSize == size;
+            return GestureDetector(
+              onTap: () => setState(() => _selectedSize = size),
+              child: Container(
+                padding: EdgeInsets.all(20.r),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFCE9760),
+                  borderRadius: BorderRadius.circular(15.r),
+                  border: Border.all(
+                    color: const Color(0xFFCE9760),
+                    width: 5.r,
+                  ),
+                ),
+                child: Image.asset(
+                  size == 'Small'
+                      ? 'assets/images/small.png'
+                      : size == 'Medium'
                           ? 'assets/images/meduim.png'
                           : 'assets/images/large.png',
-                      color:
-                          isSelected ? Colors.white : const Color(0xFF543A20),
-                      height:
-                          size == 'Small'
-                              ? 30
-                              : size == 'Medium'
-                              ? 50
-                              : 70,
-                    ),
-                  ),
-                );
-              }).toList(),
+                  color: isSelected ? Colors.white : const Color(0xFF543A20),
+                  height: size == 'Small'
+                      ? 30.h
+                      : size == 'Medium'
+                          ? 50.h
+                          : 70.h,
+                ),
+              ),
+            );
+          }).toList(),
         ),
         Row(
-          //crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children:
-              ['Small', 'Medium', 'Large'].map((size) {
-                final isSelected = _selectedSize == size;
-                return GestureDetector(
-                  onTap: () => setState(() => _selectedSize = size),
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      //color: isSelected ?  Colors.white : Colors.transparent,
-                      //borderRadius: BorderRadius.circular(15),
-                      // border: Border.all(
-                      //   color: const Color(0xFFCE9760),
-                      //   width: 2,
-                      // ),
-                    ),
-                    child: Text(
-                      size == 'Small'
-                          ? 'Small'
-                          : size == 'Medium'
+          children: ['Small', 'Medium', 'Large'].map((size) {
+            final isSelected = _selectedSize == size;
+            return GestureDetector(
+              onTap: () => setState(() => _selectedSize = size),
+              child: Container(
+                padding: EdgeInsets.all(20.r),
+                decoration: const BoxDecoration(),
+                child: Text(
+                  size == 'Small'
+                      ? 'Small'
+                      : size == 'Medium'
                           ? 'Medium'
                           : 'Large',
-                      style: TextStyle(
-                        color:
-                            isSelected ? Colors.white : const Color(0xFFCE9760),
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                  style: TextStyle(
+                    color: isSelected ? Colors.white : const Color(0xFFCE9760),
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.bold,
                   ),
-                );
-              }).toList(),
+                ),
+              ),
+            );
+          }).toList(),
         ),
       ],
     );
@@ -265,12 +256,12 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
           if (_quantity > 1) setState(() => _quantity--);
         }),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Text(
             _quantity.toString(),
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white,
-              fontSize: 24,
+              fontSize: 24.sp,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -286,12 +277,13 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        padding: const EdgeInsets.all(8),
+        padding: EdgeInsets.all(8.r),
         decoration: BoxDecoration(
           color: const Color(0xFFCE9760),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.r),
         ),
-        child: Icon(icon, color: Color(0xFF543A20)),
+        constraints: BoxConstraints(minWidth: 44.r, minHeight: 44.r),
+        child: Icon(icon, color: const Color(0xFF543A20), size: 24.r),
       ),
     );
   }
@@ -302,25 +294,19 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
         Expanded(
           flex: 1,
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            // decoration: BoxDecoration(
-            //   color: Colors.transparent,
-            //   border: Border.all(color: const Color(0xFFCE9760), width: 2),
-            //   borderRadius: BorderRadius.circular(15),
-            // ),
+            padding: EdgeInsets.symmetric(vertical: 15.h),
             child: Text(
               '\$${(widget.coffee.price * _quantity).toStringAsFixed(2)}',
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
-                //color: const Color(0xFFCE9760),
-                fontSize: 22,
+                fontSize: 22.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
         ),
-        const SizedBox(width: 15),
+        SizedBox(width: 15.w),
         Expanded(
           flex: 4,
           child: ElevatedButton(
@@ -336,33 +322,34 @@ class _CoffeeDetailsScreenState extends State<CoffeeDetailsScreen> {
               ).addToCart(cartItem);
               // Add to cart logic here
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
+                SnackBar(
                   content: Center(
                     child: Text(
                       'Added to cart successfully!',
                       style: TextStyle(
-                        color: Color(0xFF543A20),
-                        fontSize: 18,
+                        color: const Color(0xFF543A20),
+                        fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  backgroundColor: Color(0xFFCE9760),
+                  backgroundColor: const Color(0xFFCE9760),
                 ),
               );
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFFCE9760),
-              padding: const EdgeInsets.symmetric(vertical: 15),
+              padding: EdgeInsets.symmetric(vertical: 15.h),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(15.r),
               ),
+              minimumSize: Size(double.infinity, 50.h),
             ),
-            child: const Text(
+            child: Text(
               'Add to cart',
               style: TextStyle(
-                color: Color(0xFF543A20),
-                fontSize: 20,
+                color: const Color(0xFF543A20),
+                fontSize: 20.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),

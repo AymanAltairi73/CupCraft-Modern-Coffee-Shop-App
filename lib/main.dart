@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import 'Presentation/Authentication/LoginScreen.dart';
@@ -38,30 +39,37 @@ class CoffeeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'CoffeeScript',
-      theme: ThemeData(
-        fontFamily: 'Montserrat',
+    // Initialize ScreenUtil with design size based on iPhone X dimensions
+    return ScreenUtilInit(
+      designSize: const Size(375.0, 812.0),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'CoffeeScript',
+          theme: ThemeData(
+            fontFamily: 'Montserrat',
 
-        primaryColor: const Color(0xFFCE9760),
-        scaffoldBackgroundColor: const Color(0xFF543A20),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFCE9760),
-          primary: const Color(0xFFCE9760),
-          secondary: const Color(0xFF543A20),
-        ),
+            primaryColor: const Color(0xFFCE9760),
+            scaffoldBackgroundColor: const Color(0xFF543A20),
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color(0xFFCE9760),
+              primary: const Color(0xFFCE9760),
+              secondary: const Color(0xFF543A20),
+            ),
 
-        textTheme: const TextTheme(
-          headlineLarge: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+            // Use responsive font sizes with ScreenUtil
+            textTheme: TextTheme(
+              headlineLarge: TextStyle(
+                color: Colors.white,
+                fontSize: 24.sp,
+                fontWeight: FontWeight.bold,
+              ),
+              bodyLarge: TextStyle(color: Colors.white, fontSize: 16.sp),
+              bodyMedium: TextStyle(color: Colors.white70, fontSize: 14.sp),
+            ),
           ),
-          bodyLarge: TextStyle(color: Colors.white, fontSize: 16),
-          bodyMedium: TextStyle(color: Colors.white70, fontSize: 14),
-        ),
-      ),
 
       initialRoute: '/',
       onGenerateRoute: (settings) {
@@ -157,6 +165,8 @@ class CoffeeApp extends StatelessWidget {
                   ),
             );
         }
+      },
+        );
       },
     );
   }

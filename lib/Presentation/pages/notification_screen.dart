@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../core/utility/navigation_helper.dart';
 
@@ -18,47 +19,48 @@ class NotificationScreen extends StatelessWidget {
     return AppBar(
       backgroundColor: const Color(0xFF543A20),
       elevation: 0,
-      toolbarHeight: 100,
-      shape: const RoundedRectangleBorder(
+      toolbarHeight: 100.h,
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
+          bottomLeft: Radius.circular(20.r),
+          bottomRight: Radius.circular(20.r),
         ),
       ),
       leading: Padding(
-        padding: const EdgeInsets.only(left: 10),
+        padding: EdgeInsets.only(left: 10.w),
         child: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFFCE9760)),
+          icon: Icon(Icons.arrow_back_ios, color: const Color(0xFFCE9760), size: 24.r),
           onPressed: () => NavigationHelper.goBack(context),
+          iconSize: 24.r,
+          padding: EdgeInsets.all(8.r),
+          constraints: BoxConstraints(minWidth: 44.r, minHeight: 44.r),
         ),
       ),
-      title: const Text(
+      title: Text(
         'Notification',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 22,
+          fontSize: 22.sp,
           fontWeight: FontWeight.bold,
         ),
       ),
-
       centerTitle: true,
     );
   }
 
   Widget _divider() {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 5),
+      padding: EdgeInsets.only(bottom: 5.h),
       child: Divider(
-        color: const Color(0xFFCE9760).withOpacity(0.3),
-        thickness: 1,
-        //height: 10,
+        color: const Color(0xFFCE9760).withAlpha(77), // 0.3 * 255 = 77
+        thickness: 1.h,
       ),
     );
   }
 
   Widget _buildNotificationList() {
     return ListView(
-      padding: const EdgeInsets.all(20),
+      padding: EdgeInsets.all(20.r),
       children: [
         _buildSectionHeader('Today'),
         _buildNotificationItem(
@@ -180,7 +182,7 @@ class NotificationScreen extends StatelessWidget {
         ),
         _divider(),
 
-        const SizedBox(height: 20),
+        SizedBox(height: 20.h),
         _buildSectionHeader('Yesterday'),
         _buildNotificationItem(
           icon: Icons.delivery_dining,
@@ -280,23 +282,27 @@ class NotificationScreen extends StatelessWidget {
 
   Widget _buildSectionHeader(String title) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(vertical: 10.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 18,
+            style: TextStyle(
+              fontSize: 18.sp,
               fontWeight: FontWeight.w500,
               color: Colors.black54,
             ),
           ),
           TextButton(
             onPressed: () {},
-            child: const Text(
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+              minimumSize: Size(44.r, 44.r),
+            ),
+            child: Text(
               'Mark all read',
-              style: TextStyle(color: Colors.black54, fontSize: 14),
+              style: TextStyle(color: Colors.black54, fontSize: 14.sp),
             ),
           ),
         ],
@@ -311,42 +317,42 @@ class NotificationScreen extends StatelessWidget {
     required String time,
   }) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 5),
+      margin: EdgeInsets.only(bottom: 5.h),
       child: Row(
         children: [
           Container(
-            width: 50,
-            height: 50,
+            width: 50.r,
+            height: 50.r,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: Color(0xFFCE9760),
             ),
-            child: Icon(icon, color: Colors.white, size: 24),
+            child: Icon(icon, color: Colors.white, size: 24.r),
           ),
-          const SizedBox(width: 15),
+          SizedBox(width: 15.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 16,
+                  style: TextStyle(
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,
                   ),
                 ),
-                const SizedBox(height: 5),
+                SizedBox(height: 5.h),
                 Text(
                   description,
-                  style: const TextStyle(fontSize: 14, color: Colors.black54),
+                  style: TextStyle(fontSize: 14.sp, color: Colors.black54),
                 ),
               ],
             ),
           ),
           Text(
             time,
-            style: const TextStyle(fontSize: 14, color: Colors.black54),
+            style: TextStyle(fontSize: 14.sp, color: Colors.black54),
           ),
         ],
       ),

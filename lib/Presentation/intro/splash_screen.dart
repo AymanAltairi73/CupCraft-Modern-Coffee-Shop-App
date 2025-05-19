@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:developer' as developer;
 
@@ -76,14 +77,19 @@ class _SplashScreenState extends State<SplashScreen> {
                         children: [
                           Image.asset(
                             'assets/images/splash.png',
-                            width: 250,
-                            height: 250,
+                            width: 250.w,
+                            height: 250.h,
                           ),
                           if (_isLoading)
-                            const Padding(
-                              padding: EdgeInsets.only(top: 30),
-                              child: CircularProgressIndicator(
-                                color: Color(0xFFCE9760),
+                            Padding(
+                              padding: EdgeInsets.only(top: 30.h),
+                              child: SizedBox(
+                                width: 40.r,
+                                height: 40.r,
+                                child: const CircularProgressIndicator(
+                                  color: Color(0xFFCE9760),
+                                  strokeWidth: 3,
+                                ),
                               ),
                             ),
                         ],
@@ -92,10 +98,10 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                   if (!_isLoading)
                     Padding(
-                      padding: const EdgeInsets.only(
-                        bottom: 60,
-                        left: 24,
-                        right: 24,
+                      padding: EdgeInsets.only(
+                        bottom: 60.h,
+                        left: 24.w,
+                        right: 24.w,
                       ),
                       child: ElevatedButton(
                         onPressed: () => Navigator.pushReplacementNamed(
@@ -105,20 +111,21 @@ class _SplashScreenState extends State<SplashScreen> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFCE9760),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(12.r),
                           ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 50,
-                            vertical: 15,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 50.w,
+                            vertical: 15.h,
                           ),
+                          minimumSize: Size(200.w, 50.h),
                         ),
-                        child: const Text(
+                        child: Text(
                           'Get Started',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 20.sp,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Poppins',
-                            color: Color(0xFF543A20),
+                            color: const Color(0xFF543A20),
                           ),
                         ),
                       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../core/utility/navigation_helper.dart';
 
@@ -18,47 +19,49 @@ class SettingsScreen extends StatelessWidget {
     return AppBar(
       backgroundColor: const Color(0xFF543A20),
       elevation: 0,
-      toolbarHeight: 100,
-      shape: const RoundedRectangleBorder(
+      toolbarHeight: 100.h,
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
+          bottomLeft: Radius.circular(20.r),
+          bottomRight: Radius.circular(20.r),
         ),
       ),
       leading: Padding(
-        padding: const EdgeInsets.only(left: 10),
+        padding: EdgeInsets.only(left: 10.w),
         child: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFFCE9760)),
+          icon: Icon(Icons.arrow_back_ios, color: const Color(0xFFCE9760), size: 24.r),
           onPressed: () => NavigationHelper.goBack(context),
+          iconSize: 24.r,
+          padding: EdgeInsets.all(8.r),
+          constraints: BoxConstraints(minWidth: 44.r, minHeight: 44.r),
         ),
       ),
-      title: const Text(
+      title: Text(
         'Settings',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 22,
+          fontSize: 22.sp,
           fontWeight: FontWeight.bold,
         ),
       ),
-
       centerTitle: true,
     );
   }
     Widget _divider() {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 5),
+      padding: EdgeInsets.only(bottom: 5.h),
       child: Divider(
-        color: const Color(0xFFCE9760).withOpacity(0.3),
-        thickness: 1,
-        //height: 10,
+        color: const Color(0xFFCE9760).withAlpha(77), // 0.3 * 255 = 77
+        thickness: 1.h,
       ),
     );
   }
 
   Widget _buildSettingsList() {
     return ListView(
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
       children: [
-        const SizedBox(height: 20),
+        SizedBox(height: 20.h),
         _buildSettingItem(
           icon: Icons.notifications,
           title: 'Notification setting',
@@ -92,23 +95,28 @@ class SettingsScreen extends StatelessWidget {
     bool isDestructive = false,
   }) {
     return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      contentPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
       leading: CircleAvatar(
-        radius: 50,
+        radius: 30.r,
         backgroundColor: const Color(0xFFCE9760),
-        child: Icon(icon, color: Color.fromRGBO(84, 58, 32, 1), size: 40)),
+        child: Icon(
+          icon,
+          color: const Color.fromRGBO(84, 58, 32, 1),
+          size: 24.r,
+        ),
+      ),
       title: Text(
         title,
         style: TextStyle(
-          fontSize: 16,
+          fontSize: 16.sp,
           fontWeight: FontWeight.w500,
-          //color: isDestructive ? Colors.red : Colors.black,
+          color: isDestructive ? Colors.red : Colors.black,
         ),
       ),
-      trailing: const Icon(
+      trailing: Icon(
         Icons.arrow_forward_ios,
-        size: 20,
-        color: Color(0xFFCE9760),
+        size: 20.r,
+        color: const Color(0xFFCE9760),
       ),
       onTap: onTap,
     );

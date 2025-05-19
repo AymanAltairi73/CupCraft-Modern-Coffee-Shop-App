@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../core/utility/navigation_helper.dart';
 import '../../data/model/PaymentCard.dart';
 
@@ -27,42 +28,50 @@ class _AddCardScreenState extends State<AddCardScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-            icon: const Icon(Icons.home, color: Colors.white),
+            icon: Icon(Icons.home, color: Colors.white, size: 24.r),
             onPressed: () => NavigationHelper.navigateToPage(context, 0),
+            iconSize: 24.r,
+            padding: EdgeInsets.all(8.r),
+            constraints: BoxConstraints(minWidth: 44.r, minHeight: 44.r),
           ),
-          title: const Text(
+          title: Text(
             'Add card',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 24,
+              fontSize: 24.sp,
               fontWeight: FontWeight.w600,
             ),
           ),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(20.r),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset('assets/images/mastercard.png'),
-                const SizedBox(height: 40),
+                Image.asset(
+                  'assets/images/mastercard.png',
+                  height: 200.h,
+                  width: double.infinity,
+                  fit: BoxFit.contain,
+                ),
+                SizedBox(height: 40.h),
                 _buildCardHolderNameField(),
-                const SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 _buildCardNumberField(),
-                const SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 Row(
                   children: [
                     Expanded(child: _buildExpiryDateField()),
-                    const SizedBox(width: 20),
+                    SizedBox(width: 20.w),
                     Expanded(child: _buildCVVField()),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 _buildSaveCardCheckbox(),
-                const SizedBox(height: 40),
+                SizedBox(height: 40.h),
                 _buildAddCardButton(),
               ],
             ),
@@ -76,26 +85,27 @@ class _AddCardScreenState extends State<AddCardScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Card Holder name',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         TextFormField(
-          style: const TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 14.sp),
           decoration: InputDecoration(
             hintText: 'Name',
-            hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
+            hintStyle: TextStyle(color: Colors.white.withAlpha(128)), // 0.5 * 255 = 128
             filled: true,
-            fillColor: Colors.white.withOpacity(0.1),
+            fillColor: Colors.white.withAlpha(26), // 0.1 * 255 = 26
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide.none,
             ),
+            contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
@@ -117,26 +127,27 @@ class _AddCardScreenState extends State<AddCardScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Card Number',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         TextFormField(
-          style: const TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 14.sp),
           decoration: InputDecoration(
             hintText: '8763 2736 9873 0329',
-            hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
+            hintStyle: TextStyle(color: Colors.white.withAlpha(128)), // 0.5 * 255 = 128
             filled: true,
-            fillColor: Colors.white.withOpacity(0.1),
+            fillColor: Colors.white.withAlpha(26), // 0.1 * 255 = 26
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide.none,
             ),
+            contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
           ),
           keyboardType: TextInputType.number,
           inputFormatters: [
@@ -167,26 +178,27 @@ class _AddCardScreenState extends State<AddCardScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Expiry',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         TextFormField(
-          style: const TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 14.sp),
           decoration: InputDecoration(
             hintText: '28/22',
-            hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
+            hintStyle: TextStyle(color: Colors.white.withAlpha(128)), // 0.5 * 255 = 128
             filled: true,
-            fillColor: Colors.white.withOpacity(0.1),
+            fillColor: Colors.white.withAlpha(26), // 0.1 * 255 = 26
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide.none,
             ),
+            contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
           ),
           keyboardType: TextInputType.number,
           inputFormatters: [
@@ -217,26 +229,27 @@ class _AddCardScreenState extends State<AddCardScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'CVV',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         TextFormField(
-          style: const TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 14.sp),
           decoration: InputDecoration(
             hintText: '000',
-            hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
+            hintStyle: TextStyle(color: Colors.white.withAlpha(128)), // 0.5 * 255 = 128
             filled: true,
-            fillColor: Colors.white.withOpacity(0.1),
+            fillColor: Colors.white.withAlpha(26), // 0.1 * 255 = 26
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide.none,
             ),
+            contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
           ),
           keyboardType: TextInputType.number,
           inputFormatters: [
@@ -265,22 +278,25 @@ class _AddCardScreenState extends State<AddCardScreen> {
   Widget _buildSaveCardCheckbox() {
     return Row(
       children: [
-        Checkbox(
-          value: _paymentCard.saveCard,
-          onChanged: (value) {
-            setState(() {
-              _paymentCard.saveCard = value ?? false;
-            });
-          },
-          fillColor: WidgetStateProperty.resolveWith(
-            (states) => const Color(0xFFCE9760),
+        Transform.scale(
+          scale: 1.2.r,
+          child: Checkbox(
+            value: _paymentCard.saveCard,
+            onChanged: (value) {
+              setState(() {
+                _paymentCard.saveCard = value ?? false;
+              });
+            },
+            fillColor: WidgetStateProperty.resolveWith(
+              (states) => const Color(0xFFCE9760),
+            ),
           ),
         ),
-        const Text(
+        Text(
           'Save Card',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -303,16 +319,17 @@ class _AddCardScreenState extends State<AddCardScreen> {
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFFCE9760),
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: EdgeInsets.symmetric(vertical: 16.h),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12.r),
           ),
+          minimumSize: Size(double.infinity, 50.h),
         ),
-        child: const Text(
+        child: Text(
           'ADD CARD',
           style: TextStyle(
-            color: Color(0xFF543A20),
-            fontSize: 16,
+            color: const Color(0xFF543A20),
+            fontSize: 16.sp,
             fontWeight: FontWeight.bold,
           ),
         ),

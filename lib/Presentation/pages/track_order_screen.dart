@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TrackOrderScreen extends StatelessWidget {
   const TrackOrderScreen({super.key});
@@ -11,14 +12,17 @@ class TrackOrderScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+          icon: Icon(Icons.arrow_back_ios, color: Colors.white, size: 24.r),
           onPressed: () => Navigator.pop(context),
+          iconSize: 24.r,
+          padding: EdgeInsets.all(8.r),
+          constraints: BoxConstraints(minWidth: 44.r, minHeight: 44.r),
         ),
-        title: const Text(
+        title: Text(
           'Track Order',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 24,
+            fontSize: 24.sp,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -28,44 +32,44 @@ class TrackOrderScreen extends StatelessWidget {
         children: [
           // Delivery Image
           SizedBox(
-            height: 250,
+            height: 250.h,
             child: Image.asset('assets/images/delivery_tracking.png'),
           ),
-          
+
           // Estimated Delivery Time
           Padding(
-            padding: const EdgeInsets.only(left: 20,  top: 20,bottom: 10),
+            padding: EdgeInsets.only(left: 20.w, top: 20.h, bottom: 10.h),
             child: Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(10),
+                  padding: EdgeInsets.all(10.r),
                   decoration: const BoxDecoration(
                     color: Color(0xFFCE9760),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.access_time,
                     color: Colors.white,
-                    size: 50,
+                    size: 50.r,
                   ),
                 ),
-                const SizedBox(width: 15),
-                const Column(
+                SizedBox(width: 15.w),
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Estimated Delivery time',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 20.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
                       '45 - 55 min',
                       style: TextStyle(
-                        color: Color(0xFFCE9760),
-                        fontSize: 20,
+                        color: const Color(0xFFCE9760),
+                        fontSize: 20.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -78,7 +82,7 @@ class TrackOrderScreen extends StatelessWidget {
           // Order Timeline
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(left: 100),
+              padding: EdgeInsets.only(left: 100.w),
               child: Column(
                 children: [
                   _buildTimelineItem(
@@ -109,7 +113,7 @@ class TrackOrderScreen extends StatelessWidget {
 
           // Chat Button
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.all(20.r),
             child: SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -118,16 +122,17 @@ class TrackOrderScreen extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFCE9760),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  padding: EdgeInsets.symmetric(vertical: 16.h),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                   ),
+                  minimumSize: Size(double.infinity, 50.h),
                 ),
-                child: const Text(
+                child: Text(
                   'Chat with Rider',
                   style: TextStyle(
-                    color: Color(0xFF543A20),
-                    fontSize: 18,
+                    color: const Color(0xFF543A20),
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -146,51 +151,51 @@ class TrackOrderScreen extends StatelessWidget {
         Column(
           children: [
             Container(
-              width: 35,
-              height: 35,
+              width: 35.r,
+              height: 35.r,
               decoration: BoxDecoration(
-                color: isCompleted ? const Color(0xFFCE9760) : Color(0xFF543A20),
+                color: isCompleted ? const Color(0xFFCE9760) : const Color(0xFF543A20),
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isCompleted ? const Color(0xFFCE9760) : Color(0xFFCE9760),
-                  width: 2,
+                  color: isCompleted ? const Color(0xFFCE9760) : const Color(0xFFCE9760),
+                  width: 2.r,
                 )
               ),
               child: Icon(
                 Icons.check,
-                color: isCompleted ? const Color(0xFF543A20) : Color(0xFFCE9760),
-                size: 20,
+                color: isCompleted ? const Color(0xFF543A20) : const Color(0xFFCE9760),
+                size: 20.r,
               ),
             ),
             if (!isLast)
               Container(
-                width: 2,
-                height: 50,
+                width: 2.w,
+                height: 50.h,
                 color: isCompleted ? const Color(0xFFCE9760) : Colors.grey,
               ),
           ],
         ),
-        const SizedBox(width: 15),
+        SizedBox(width: 15.w),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.w600,
                 ),
               ),
               Text(
                 time,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.white70,
-                  fontSize: 14,
+                  fontSize: 14.sp,
                 ),
               ),
-              if (!isLast) const SizedBox(height: 30),
+              if (!isLast) SizedBox(height: 30.h),
             ],
           ),
         ),
