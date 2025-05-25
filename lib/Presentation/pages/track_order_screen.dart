@@ -82,31 +82,34 @@ class TrackOrderScreen extends StatelessWidget {
           // Order Timeline
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 100.w),
-              child: Column(
-                children: [
-                  _buildTimelineItem(
-                    'Order placed',
-                    '23 march, 2024, 04:35 PM',
-                    isCompleted: true,
-                  ),
-                  _buildTimelineItem(
-                    'In Progress',
-                    '23 march, 2024, 04:40 PM',
-                    isCompleted: true,
-                  ),
-                  _buildTimelineItem(
-                    'On Your way',
-                    '23 march, 2024, 05:10 PM',
-                    isCompleted: false,
-                  ),
-                  _buildTimelineItem(
-                    'Deliverd',
-                    '23 march, 2024, 05:20 PM',
-                    isCompleted: false,
-                    isLast: true,
-                  ),
-                ],
+              padding: EdgeInsets.only(left: 100.w, top: 10.h),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _buildTimelineItem(
+                      'Order placed',
+                      '23 march, 2024, 04:35 PM',
+                      isCompleted: true,
+                    ),
+                    _buildTimelineItem(
+                      'In Progress',
+                      '23 march, 2024, 04:40 PM',
+                      isCompleted: true,
+                    ),
+                    _buildTimelineItem(
+                      'On Your way',
+                      '23 march, 2024, 05:10 PM',
+                      isCompleted: false,
+                    ),
+                    _buildTimelineItem(
+                      'Deliverd',
+                      '23 march, 2024, 05:20 PM',
+                      isCompleted: false,
+                      isLast: true,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -170,7 +173,7 @@ class TrackOrderScreen extends StatelessWidget {
             if (!isLast)
               Container(
                 width: 2.w,
-                height: 50.h,
+                height: 40.h,
                 color: isCompleted ? const Color(0xFFCE9760) : Colors.grey,
               ),
           ],
@@ -195,7 +198,7 @@ class TrackOrderScreen extends StatelessWidget {
                   fontSize: 14.sp,
                 ),
               ),
-              if (!isLast) SizedBox(height: 30.h),
+              if (!isLast) SizedBox(height: 20.h),
             ],
           ),
         ),
